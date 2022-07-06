@@ -1,6 +1,12 @@
-import { Sidebar } from '../../modules';
-// import styles from '../styles/Home.module.css';
+import { DsaList } from '../../modules';
+import { useRouter } from 'next/router';
 
 export default function DSA() {
-  return <Sidebar />;
+  const router = useRouter();
+  console.log(router);
+  return (
+    <div className="w-100">
+      <DsaList />
+    </div>
+  );
 }

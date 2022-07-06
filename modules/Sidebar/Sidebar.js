@@ -1,11 +1,8 @@
-import styles from './Sidebar.module.css';
 import { navLinks } from './constants';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 export const Sidebar = () => {
-  const [selected, setSelected] = useState(1);
-
   const router = useRouter();
 
   const activeMenu = useMemo(
@@ -14,7 +11,7 @@ export const Sidebar = () => {
   );
 
   return (
-    <div className="flex flex-col w-64 h-screen py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
+    <div className="flex flex-col h-screen py-8 w-2/12 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
       <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white">
         prepbook
       </h2>
@@ -36,18 +33,15 @@ export const Sidebar = () => {
         <nav>
           {navLinks.map((nav) => (
             <a
-              className={`flex items-center px-4 py-2 text-gray-700 rounded-md border-2 ${
-                activeMenu.id === nav.id ? 'border-blue-600' : 'border-none'
-              } dark:bg-gray-700 dark:text-gray-200`}
+              className={`flex items-center px-4 py-2 text-gray-700 rounded-md border-2 cursor-pointer
+              ${activeMenu?.id === nav.id ? 'border-blue-600' : 'border-none'}
+               dark:bg-gray-700 dark:text-gray-200`}
               key={nav.id}
               onClick={(e) => {
                 e.preventDefault();
-                setSelected(nav.id);
                 router.push(nav.link);
               }}
             >
-              {console.log(nav.id)}
-
               <svg
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
