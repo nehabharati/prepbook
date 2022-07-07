@@ -1,0 +1,15 @@
+.modalContainer {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  width: 50%;
+}
+
+.overlay {
+  position: absolute;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  width: 100%;
+}

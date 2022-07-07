@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.5",
+    "@monaco-editor/react": "^4.4.5",
     "@prisma/client": "4.0.0",
+    "axios": "^0.27.2",
     "classnames": "^2.3.1",
+    "monaco-themes": "^0.4.2",
     "next": "12.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-select": "^5.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
