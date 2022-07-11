@@ -51,6 +51,131 @@ a {
   @apply text-gray-600 border border-gray-600 bg-transparent hover:bg-gray-600 hover:text-white;
 } */
 
+/* Basic editor styles */
+/* .ProseMirror {
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1) !important;
+    color: #616161;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: #000;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0d0d0d, 0.1);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0d0d0d, 0.1);
+    margin: 2rem 0;
+  }
+} */
+
 @tailwind base;
+h1 {
+  @apply text-2xl;
+  @apply font-bold;
+}
+h2 {
+  @apply text-xl;
+  @apply font-bold;
+}
+h3 {
+  @apply text-lg;
+  @apply font-bold;
+}
+h4 {
+  @apply text-base;
+  @apply font-bold;
+}
+h5 {
+  @apply text-sm;
+  @apply font-bold;
+}
+h6 {
+  @apply text-xs;
+  @apply font-bold;
+}
+blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
+}
+pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: JetBrainsMono, monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+ol {
+  list-style: auto;
+  padding: 0 2rem;
+}
+ul {
+  list-style: unset;
+  padding: 0 2rem;
+}
+code {
+  background-color: #6161611a;
+  color: #616161;
+}
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+table th,
+table td {
+  min-width: 1em;
+  /* border: 2px solid #ced4da; */
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+table th {
+  font-weight: 700;
+  text-align: left;
+  background-color: #f1f3f5;
+}
 @tailwind components;
 @tailwind utilities;

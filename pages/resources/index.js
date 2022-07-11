@@ -1,6 +1,9 @@
-import { Sidebar } from '../../modules';
-// import styles from '../styles/Home.module.css';
+import { Note } from '../../modules';
 
-export default function Resources() {
-  return <Sidebar />;
+export default function Notes() {
+  return (
+    <div>
+      <Note />
+    </div>
+  );
 }

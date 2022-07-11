@@ -1,9 +1,9 @@
-import { Sidebar, Hero } from '../modules';
-import styles from '../styles/Home.module.css';
+// import styles from '../styles/Home.module.css';
+import { Hero } from '../modules';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       {/* <Sidebar /> */}
       <Hero />
     </div>

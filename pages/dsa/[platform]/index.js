@@ -1,9 +1,9 @@
-import { Sidebar, Table } from '../../../modules';
+import { QuestionList } from '../../../modules';
 
 export default function Platform() {
   return (
     <div className="relative">
-      <Table />
+      <QuestionList />
     </div>
   );
 }

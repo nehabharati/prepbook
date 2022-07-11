@@ -10,7 +10,6 @@ export const Dropdown = ({
   theme,
   type,
 }) => {
-  console.log(type);
   return (
     <Select
       placeholder={type === 'Language' ? `Filter By Category` : `Select Theme`}
@@ -24,6 +23,7 @@ export const Dropdown = ({
             }))
       }
       styles={customStyles}
+      // className="w-48 border-2 border-pink-400 rounded-lg"
       defaultValue={type === 'Language' ? languageOptions[0] : theme}
       onChange={
         type === 'Language'
