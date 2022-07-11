@@ -1,4 +1,4 @@
-import { Sidebar } from '../../modules';
+import { Sidebar } from '../../elements';
 // import styles from '../styles/Home.module.css';
 
 export default function Design() {

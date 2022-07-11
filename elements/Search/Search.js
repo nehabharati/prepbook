@@ -1,6 +1,6 @@
 export const Search = () => {
   return (
-    <section className="relative w-full max-w-md px-5 py-4 mx-auto rounded-md">
+    <section className="relative w-full max-w-md px-5 py-4  rounded-md">
       <div className="relative">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <svg

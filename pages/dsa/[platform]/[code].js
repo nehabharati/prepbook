@@ -1,4 +1,4 @@
-import { Playground, Sidebar, Table } from '../../../modules';
+import { Playground } from '../../../modules';
 
 export default function Code() {
   return (

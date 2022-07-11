@@ -32,8 +32,9 @@ async function addPlatform(req, res) {
     const newEntry = await prisma.platformDetails.create({
       data: {
         name: body.name,
-        image: body.image,
-        tag: body.tag,
+        color: body.color,
+        // image: body.image,
+        // tag: body.tag,
       },
     });
     return res.status(200).json(newEntry, { success: true });

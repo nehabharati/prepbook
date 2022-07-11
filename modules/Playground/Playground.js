@@ -176,7 +176,6 @@ export const Playground = () => {
         draggable
         pauseOnHover
       /> */}
-      <div className="h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
       <div className="flex flex-row">
         <div className="px-4 py-2">
           <Dropdown onSelectChange={onSelectChange} type="Language" />
@@ -207,7 +206,7 @@ export const Playground = () => {
               onClick={handleCompile}
               disabled={!code}
               className={classNames(
-                'mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0',
+                'mt-4 border-4 border-pink-300 z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0',
                 !code ? 'opacity-50' : ''
               )}
             >
