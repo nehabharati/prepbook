@@ -16,12 +16,12 @@ export const Project = ({ closeModal }) => {
       {showModal && <Modal closeModal={setShowModal} />}
       <Sidebar />
 
-      <div className="flex flex-col w-10/12">
+      <div className="flex flex-col w-10/12 my-6">
         <SearchAndFilter />
 
         <button
           onClick={() => closeModal(false)}
-          className="px-4 py-2 w-24 mx-6 my-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+          className="px-4 py-2 w-24 text-sm mx-6 my-4 tracking-wide text-white capitalize transition-colors duration-200 transform bg-black rounded-lg hover:bg-gray-800 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
         >
           Add
         </button>

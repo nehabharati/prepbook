@@ -1,6 +1,6 @@
-export const Search = () => {
+export const Search = ({ list, keys }) => {
   return (
-    <section className="relative w-full max-w-md px-5 py-4  rounded-md">
+    <section className="relative rounded-md">
       <div className="relative">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <svg
@@ -20,7 +20,7 @@ export const Search = () => {
 
         <input
           type="text"
-          className="w-full py-3 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+          className="w-full py-1 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Search"
         />
       </div>

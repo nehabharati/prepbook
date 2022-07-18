@@ -1,4 +1,4 @@
-export const CustomInput = ({ label, handleEntry }) => {
+export const CustomInput = ({ label, handleEntry, placeholder }) => {
   return (
     <div>
       <label className="text-gray-700 dark:text-gray-200" htmlFor="name">
@@ -6,6 +6,7 @@ export const CustomInput = ({ label, handleEntry }) => {
       </label>
       <input
         id="name"
+        placeholder={placeholder}
         type="text"
         required
         onChange={handleEntry}

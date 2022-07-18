@@ -9,10 +9,17 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model PlatformDetails {
+model NoteDetails {
   id Int @id @default(autoincrement())
   name String 
-  color String
-  // image String?
-  // tag String?
 }
+
+ 
+model ProblemDetails {
+  id    Int    @id @default(autoincrement())
+  name String 
+  difficulty String?
+  category String? 
+  solved Boolean?
+}
+ 

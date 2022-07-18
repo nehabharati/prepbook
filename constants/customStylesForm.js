@@ -1,4 +1,4 @@
-export const customStyles = {
+export const customStylesForm = {
   control: (styles) => ({
     ...styles,
     width: '100%',
@@ -11,8 +11,8 @@ export const customStyles = {
     backgroundColor: '#FFFFFF',
     cursor: 'pointer',
     outline: '0px !important',
-    border: '4px solid rgba(0,0,0,1)',
-    // boxShadow: '5px 5px 0px 0px rgba(0,0,0);',
+    border: '4px solid rgba(229, 231, 235 ,1)',
+    // boxShadow: '5px 5px 0px 0px rgba(229, 231, 235 );',
     // ':hover': {
     //   border: '2px solid #000000',
     //   boxShadow: 'none',
@@ -55,7 +55,7 @@ export const customStyles = {
       ...styles,
       backgroundColor: '#fff',
       maxWidth: '14rem',
-      border: '4px solid rgba(0,0,0,1)',
+      border: '4px solid rgba(229, 231, 235 ,1)',
       borderRadius: '10px',
       // boxShadow: '5px 5px 0px 0px rgba(0,0,0);',
     };

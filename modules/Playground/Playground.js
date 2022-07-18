@@ -4,9 +4,11 @@ import axios from 'axios';
 // import { classnames } from '../utils/general';
 import classNames from 'classnames';
 import { languageOptions } from '../../constants/languageOptions';
+import { customStyles } from '../../constants/customStyles';
 
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
+import monacoThemes from 'monaco-themes/themes/themelist';
 
 import { defineTheme } from '../../lib/defineTheme';
 // import useKeyPress from '../hooks/useKeyPress';
@@ -29,7 +31,7 @@ export const Playground = () => {
 
   const onSelectChange = (sl) => {
     // console.log('selected Option...', sl);
-    // setLanguage(sl);
+    setLanguage(sl);
   };
 
   //   useEffect(() => {
@@ -178,13 +180,27 @@ export const Playground = () => {
       /> */}
       <div className="flex flex-row">
         <div className="px-4 py-2">
-          <Dropdown onSelectChange={onSelectChange} type="Language" />
+          <Dropdown
+            onChange={onSelectChange}
+            placeholder="Language"
+            options={languageOptions}
+            defaultValue={languageOptions[0]}
+            styles={customStyles}
+          />
         </div>
         <div className="px-4 py-2">
           <Dropdown
-            handleThemeChange={handleThemeChange}
-            theme={theme}
-            type="Theme"
+            onChange={handleThemeChange}
+            defaultValue={theme}
+            styles={customStyles}
+            placeholder="Theme"
+            options={Object.entries(monacoThemes).map(
+              ([themeId, themeName]) => ({
+                label: themeName,
+                value: themeId,
+                key: themeId,
+              })
+            )}
           />
         </div>
       </div>
@@ -206,7 +222,7 @@ export const Playground = () => {
               onClick={handleCompile}
               disabled={!code}
               className={classNames(
-                'mt-4 border-4 border-pink-300 z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0',
+                'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
                 !code ? 'opacity-50' : ''
               )}
             >

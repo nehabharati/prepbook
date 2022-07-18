@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react';
 import { Form } from '../Form';
 
 export const Modal = ({ closeModal, children }) => {
+  console.log('modal clciked');
   return (
     <div className={`z-50 ${styles.overlay}`}>
       <div className={`${styles.modalContainer}`}>

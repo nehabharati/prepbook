@@ -21,7 +21,7 @@ export const Hero = () => {
               Your one-stop to track your interview prep all at one place
             </p>
             <div className="flex justify-center">
-              <button className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">
+              <button className={`${styles.glowHover} rounded-lg`}>
                 <Link href="dsa">Get Started</Link>
               </button>
               {/* <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
