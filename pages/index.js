@@ -1,7 +1,9 @@
 // import styles from '../styles/Home.module.css';
 import { Hero } from '../modules';
+import prisma from '../lib/prisma';
 
-export default function Home() {
+export default function Home({ feed }) {
+  console.log(feed);
   return (
     <div>
       {/* <Sidebar /> */}
@@ -9,3 +11,12 @@ export default function Home() {
     </div>
   );
 }
+
+// index.tsx
+export const getStaticProps = async () => {
+  const feed = await prisma.problemDetails.findMany();
+  return {
+    props: { feed },
+    revalidate: 10,
+  };
+};

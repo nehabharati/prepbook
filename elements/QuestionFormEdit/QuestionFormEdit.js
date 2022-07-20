@@ -1,100 +1,99 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from '../Form';
-import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../';
+import { PrismaClient } from '@prisma/client';
+import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '..';
 import { customStylesForm } from '../../constants/customStyles';
 
-export const QuestionForm = ({ closeModal }) => {
-  const [name, setName] = useState('');
-  const [difficulty, setDifficulty] = useState('Easy');
-  const [category, setCategory] = useState(null);
-  const [solved, setSolved] = useState(false);
+// const prisma = new PrismaClient();
+
+export const QuestionFormEdit = ({ closeModal, type, problem }) => {
+  console.log(problem);
+  const [name, setName] = useState(problem.name);
+  const [difficulty, setDifficulty] = useState(problem.difficulty);
+  const [category, setCategory] = useState(problem.category);
+  const [solved, setSolved] = useState(problem.solved);
 
   const handleName = (e) => setName(e.target.value);
   const handleDifficulty = (e) => setDifficulty(e.value);
   const handleCategory = (e) => {
-    let categories = e.map((i) => i.label).join(',');
-    console.log(categories);
-    setCategory(e);
+    let a = category.split(',');
+    a.push(e[0].value);
+    setCategory(a.join(','));
   };
-  const handleSolved = (e) => setSolved(e.target.value);
-  const handleSubmit = async (e) => {
+  const handleSolved = (e) => {
+    console.log(e);
+    setSolved(e.target.value);
+  };
+  const handleSubmit = async (e, id) => {
     e.preventDefault();
-    let eachCategory = category.map((i) => i.label).join(',');
     let isSolved = solved === 'No' ? false : true;
-    const body = { name, difficulty, category: eachCategory, solved: isSolved };
-    console.log(body);
-    try {
-      const response = await fetch('/api/problems', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      if (response.status !== 200) {
-        console.log('something went wrong');
-        //set an error banner here
-      } else {
-        resetForm();
-        console.log('form submitted successfully !!!');
-        //set a success banner here
-      }
-      //check response, if success is false, dont take them to success page
-    } catch (error) {
-      console.log('there was an error submitting', error);
-    }
+    const body = { name, difficulty, category, solved: isSolved };
+
+    await fetch(`/api/problem/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    window.location.reload();
   };
 
-  const resetForm = () => {
-    setName('');
-    setDifficulty('');
-    setCategory('');
-    setSolved('');
-  };
   const categories = [
     {
       label: 'Array',
       value: 'Array',
+      key: 'Array',
     },
     {
       label: 'String',
       value: 'String',
+      key: 'String',
     },
     {
       label: 'Hash Table',
       value: 'Hash Table',
+      key: 'Hash Table',
     },
     {
       label: 'DP',
       value: 'DP',
+      key: 'DP',
     },
     {
       label: 'Math',
       value: 'Math',
+      key: 'Math',
     },
     {
       label: 'Two Pointer',
       value: 'Two Pointer',
+      key: 'Two Pointer',
     },
     {
       label: 'Binary Tree',
       value: 'Binary Tree',
+      key: 'Binary Tree',
     },
     {
       label: 'Stack',
       value: 'Stack',
+      key: 'Stack',
     },
     {
       label: 'Recursion',
       value: 'Recursion',
+      key: 'Recursion',
     },
   ];
+
   return (
     <div className="relative flex-auto">
       <Form>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e, problem.id)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
             <CustomInput
               label={'Name'}
               handleEntry={handleName}
+              value={name}
               placeholder={'Please enter the name'}
             />
             <div>
@@ -120,17 +119,12 @@ export const QuestionForm = ({ closeModal }) => {
                     key: 'Hard',
                   },
                 ]}
-                defaultValue={{ value: 'Select...', label: 'Select...' }}
+                value={difficulty}
               />
             </div>
             <div>
               <label htmlFor="category">Category</label>
-              {/* <MultiSelect
-                value={category}
-                options={categories}
-                handleChange={handleCategory}
-                multi={true}
-              /> */}
+
               <MultiSelect
                 options={categories}
                 placeholder="Select category"

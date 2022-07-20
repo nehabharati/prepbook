@@ -13,11 +13,11 @@ model NoteDetails {
   id Int @id @default(autoincrement())
   name String 
 }
-
  
 model ProblemDetails {
   id    Int    @id @default(autoincrement())
   name String 
+  link String
   difficulty String?
   category String? 
   solved Boolean?

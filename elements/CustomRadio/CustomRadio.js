@@ -1,4 +1,5 @@
 export const CustomRadio = ({ id, label, value, onChange }) => {
+  console.log(value);
   return (
     <div>
       <span>{label}</span>
@@ -7,8 +8,8 @@ export const CustomRadio = ({ id, label, value, onChange }) => {
           <input
             className="mr-1"
             type="radio"
-            value="Yes"
-            checked={value === 'Yes'}
+            value={'Yes'}
+            checked={value === 'Yes' || value === true}
             onChange={onChange}
           />
           Yes
@@ -17,8 +18,8 @@ export const CustomRadio = ({ id, label, value, onChange }) => {
           <input
             className="mr-1"
             type="radio"
-            value="No"
-            checked={value === 'No'}
+            value={'No'}
+            checked={value === 'No' || value === false}
             onChange={onChange}
           />
           No

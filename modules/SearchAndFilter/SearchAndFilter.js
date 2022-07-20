@@ -3,19 +3,19 @@ import Fuse from 'fuse.js';
 import { useEffect } from 'react';
 import styles from './SearchAndFilter.module.css';
 
-export const SearchAndFilter = ({ keys, list, setProblemList }) => {
+export const SearchAndFilter = ({ keys, list, setList }) => {
   console.log(list, keys);
-  const fuse = new Fuse(list, {
-    keys: keys,
-    includeScore: true,
-  });
+  // const fuse = new Fuse(list, {
+  //   keys: keys,
+  //   includeScore: true,
+  // });
 
-  useEffect(() => {
-    const results = fuse.search('easy');
-    const searchResults = results?.map((result) => result.item);
-    console.log(searchResults);
-    setProblemList(searchResults);
-  }, []);
+  // useEffect(() => {
+  //   const results = fuse.search('easy');
+  //   const searchResults = results?.map((result) => result.item);
+  //   console.log(searchResults);
+  //   setList(searchResults);
+  // }, []);
 
   return (
     <div className="flex justify-between">

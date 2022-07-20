@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/Image';
 import Options from './assets/options.svg';
-import { NotesForm, Modal } from '../';
+import { NotesForm, Modal } from '..';
 
-export const List = ({ showModal }) => {
+export const NoteEdit = ({ showModal }) => {
   const [show, setShow] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
 

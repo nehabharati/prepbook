@@ -1,4 +1,12 @@
-import { Modal, Sidebar, NotesForm, Back, List, Table } from '../../elements';
+import {
+  Modal,
+  Sidebar,
+  NotesForm,
+  Back,
+  List,
+  Table,
+  NoteEdit,
+} from '../../elements';
 import { SearchAndFilter } from '..';
 import { problems } from './constants';
 import Link from 'next/link';
@@ -31,11 +39,7 @@ export const NotesList = () => {
           Add
         </button>
         {problems.length >= 1 ? (
-          <Table
-            problems={problems}
-            parameters={a}
-            setProblemList={setProblemList}
-          >
+          <Table problems={problems} parameters={a} setList={setProblemList}>
             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
               <tr>
                 <th className="p-2 whitespace-nowrap">
@@ -58,7 +62,7 @@ export const NotesList = () => {
                   <td className="py-2 px-0 m-0 whitespace-nowrap  flex items-center justify-end">
                     <div className="rounded-sm py-1 text-xs float-right flex items-center">
                       <span className="mx-4">{new Date().toDateString()}</span>
-                      <List showModal={showModal} />
+                      <NoteEdit showModal={showModal} />
                       <Link href={`/notes/${problem.link}`} key={problem.id}>
                         <span className="rounded-lg py-1 ml-4 px-2 text-xs text-white float-right flex items-center bg-black">
                           Open

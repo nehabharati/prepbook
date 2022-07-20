@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { SearchAndFilter } from '../../modules';
 
-export const Table = ({ children, problems, parameters, setProblemList }) => {
+export const Table = ({ children, problems, parameters, setList }) => {
   const router = useRouter();
 
   const { query } = router;
@@ -14,7 +14,7 @@ export const Table = ({ children, problems, parameters, setProblemList }) => {
             <SearchAndFilter
               keys={parameters}
               list={problems}
-              setProblemList={setProblemList}
+              setList={setList}
             />
           </header>
 

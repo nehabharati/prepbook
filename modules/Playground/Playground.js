@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { CodeEditorWindow, Dropdown, Output, Input } from '../../elements';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+
 // import { classnames } from '../utils/general';
 import classNames from 'classnames';
 import { languageOptions } from '../../constants/languageOptions';
@@ -25,9 +27,11 @@ export const Playground = () => {
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState('cobalt');
   const [language, setLanguage] = useState(languageOptions[0]);
-
+  const router = useRouter();
   //   const enterPress = useKeyPress('Enter');
   //   const ctrlPress = useKeyPress('Control');
+
+  console.log(router);
 
   const onSelectChange = (sl) => {
     // console.log('selected Option...', sl);

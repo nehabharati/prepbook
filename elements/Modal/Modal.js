@@ -3,14 +3,16 @@ import styles from './Modal.module.css';
 import { Fragment, useState } from 'react';
 import { Form } from '../Form';
 
-export const Modal = ({ closeModal, children }) => {
+export const Modal = ({ closeModal, children, type }) => {
   console.log('modal clciked');
   return (
     <div className={`z-50 ${styles.overlay}`}>
       <div className={`${styles.modalContainer}`}>
         <div className="border-0 rounded-xl  bg-white px-6">
           <div className="flex items-start justify-between py-4 border-b border-solid border-slate-200 rounded-t">
-            <h3 className="text-3xl font-semibold">Add Question</h3>
+            <h3 className="text-3xl font-semibold capitalize">
+              {type} Question
+            </h3>
             <button
               className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
               onClick={() => closeModal(false)}
