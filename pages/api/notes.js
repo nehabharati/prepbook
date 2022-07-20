@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     return await addPlatform(req, res);
   } else if (req.method === 'GET') {
-    return await readPlatforms(req, res);
+    return await readProblems(req, res);
   } else {
     return res
       .status(405)
@@ -14,10 +14,10 @@ export default async function handler(req, res) {
   }
 }
 
-async function readPlatforms(req, res) {
+async function readProblems(req, res) {
   try {
-    const platforms = await prisma.platformDetails.findMany();
-    return res.status(200).json(platforms, { success: true });
+    const problems = await prisma.platformDetails.findMany();
+    return res.status(200).json(problems, { success: true });
   } catch (error) {
     console.error('Request error', error);
     res
@@ -26,10 +26,10 @@ async function readPlatforms(req, res) {
   }
 }
 
-async function addPlatform(req, res) {
+async function addProblem(req, res) {
   const body = req.body;
   try {
-    const newEntry = await prisma.platformDetails.create({
+    const newEntry = await prisma.problemDetails.create({
       data: {
         name: body.name,
         color: body.color,
@@ -40,8 +40,6 @@ async function addPlatform(req, res) {
     return res.status(200).json(newEntry, { success: true });
   } catch (error) {
     console.error('Request error', error);
-    res
-      .status(500)
-      .json({ error: 'Error adding new platform', success: false });
+    res.status(500).json({ error: 'Error adding new problem', success: false });
   }
 }

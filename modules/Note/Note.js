@@ -1,9 +1,9 @@
-import { QuestionList } from '../../modules';
+import { NotesList } from '../../modules';
 
 export const Note = () => {
   return (
     <div className="flex w-full">
-      <QuestionList />
+      <NotesList />
     </div>
   );
 };

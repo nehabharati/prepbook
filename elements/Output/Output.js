@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Output.module.css';
 
 export const Output = ({ outputDetails }) => {
-  console.log(outputDetails);
+  // console.log(outputDetails);
   const getOutput = () => {
     let statusId = outputDetails?.status?.id;
 

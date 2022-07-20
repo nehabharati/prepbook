@@ -7,6 +7,9 @@ import { useState } from 'react';
 
 export const PlatformList = () => {
   const [showModal, setShowModal] = useState(false);
+  const [platformList, setPlatformList] = useState(platforms);
+
+  const parameters = ['name'];
   const colors = {
     yellow: 'bg-yellow-300 border-yellow-500',
     green: 'bg-green-300 border-green-500',
@@ -20,12 +23,15 @@ export const PlatformList = () => {
       )}
       <Sidebar />
 
-      <div className="flex flex-col w-10/12">
-        <SearchAndFilter />
-
+      <div className="flex flex-col w-10/12 my-6">
+        <SearchAndFilter
+          keys={parameters}
+          list={platforms}
+          setList={setPlatformList}
+        />
         <button
           onClick={() => setShowModal(!showModal)}
-          className="px-4 py-2 w-24 mx-6 my-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+          className="px-4 py-2 w-24 mx-6 my-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-black rounded-md hover:bg-gray-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
         >
           Add
         </button>

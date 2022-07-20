@@ -63,10 +63,23 @@ export const NotesEditor = () => {
   return (
     <div className="flex ">
       <Sidebar />
-      <div className="flex flex-col w-10/12 m-4 p-8">
+      <div className="flex flex-col w-10/12 my-6 m-4 p-8">
         <MenuBar editor={editor} />
+
         <div className="p-4 border border-black rounded-md border-t-0">
           <EditorContent editor={editor} className="focus:outline-0" />
+        </div>
+        <div className="flex items-baseline my-2">
+          <p>Want to share this with the world? Tweet it </p>
+          <button className="bg-blue-400 rounded-lg px-2 py-1 mx-2 text-white capitalize">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${content}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              tweet
+            </a>
+          </button>
         </div>
       </div>
     </div>

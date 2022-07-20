@@ -24,7 +24,7 @@ export const Header = () => {
           <a className="mr-5 hover:text-gray-900">Notes</a>
           <a className="mr-5 hover:text-gray-900">Resources</a>
         </nav>
-        <button className="inline-flex items-center bg-blue-500 text-white border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+        <button className="inline-flex items-center bg-black text-white border-0 py-2 px-4 focus:outline-none hover:bg-gray-800 rounded-lg text-sm mt-4 md:mt-0">
           Login
           {/* <svg
             fill="none"

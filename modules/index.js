@@ -2,6 +2,7 @@ export * from './Hero';
 export * from './Header';
 export * from './PlatformList';
 export * from './QuestionList';
+export * from './NotesList';
 export * from './SearchAndFilter';
 export * from './Note';
 export * from './Playground';

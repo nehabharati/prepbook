@@ -1,23 +1,21 @@
 import { useState } from 'react';
 import { Form } from '../Form';
-import { CustomInput, CustomRadio } from '../';
+import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '..';
+import { customStylesForm } from '../../constants/customStyles';
 
-export const QuestionForm = ({ closeModal }) => {
+export const NotesForm = ({ closeModal }) => {
   const [name, setName] = useState('');
-  const [difficulty, setDifficulty] = useState('Easy');
-  const [category, setCategory] = useState('Two pointer');
-  const [solved, setSolved] = useState(false);
+  const [description, setDescription] = useState(new Date());
 
   const handleName = (e) => setName(e.target.value);
-  const handleDifficulty = (e) => setDifficulty(e.target.value);
-  const handleCategory = (e) => setCategory(e.target.value);
-  const handleSolved = (e) => setSolved(e.target.value);
+  const handleDescription = (e) => setDescription(e.target.value);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const body = { name, difficulty, category, solved };
+    const body = { name, description };
     console.log(body);
     try {
-      const response = await fetch('/api/platform', {
+      const response = await fetch('/api/notes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -38,7 +36,7 @@ export const QuestionForm = ({ closeModal }) => {
 
   const resetForm = () => {
     setName('');
-    setColor('');
+    setDescription('');
   };
   return (
     <div className="relative flex-auto">
@@ -46,14 +44,10 @@ export const QuestionForm = ({ closeModal }) => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
             <CustomInput label={'Name'} handleEntry={handleName} />
-            <CustomInput label={'Difficulty'} handleEntry={handleDifficulty} />
-            <CustomInput label={'Category'} handleEntry={handleCategory} />
-            <CustomRadio
-              label={'Have you solved the question?'}
-              value={solved}
-              onChange={handleSolved}
+            <CustomInput
+              label={'Description'}
+              handleEntry={handleDescription}
             />
-            {/* <CustomInput label={'Solved'} handleEntry={handleSolved} /> */}
             <div>
               <div className="flex items-center justify-end py-4 border-t border-solid border-slate-200 rounded-b">
                 <button
