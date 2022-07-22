@@ -1,25 +1,20 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/Image';
-import { PrismaClient } from '@prisma/client';
 import Options from './assets/options.svg';
-import { QuestionFormAdd, QuestionFormEdit, Modal } from '..';
+import { ResourceFormEdit, Modal } from '../..';
 
-export const QuestionEdit = ({ problem }) => {
+export const ResourceEdit = ({ resource }) => {
   const [show, setShow] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
 
   const handleDelete = async (id) => {
-    await fetch(`/api/problem/${id}`, {
+    await fetch(`/api/resource/${id}`, {
       method: 'DELETE',
     });
     window.location.reload();
   };
 
-  const handleUpdate = async (id) => {
-    setUpdateModal(!updateModal);
-    console.log(id);
-  };
+  const handleUpdate = async () => setUpdateModal(!updateModal);
 
   return (
     <>
@@ -36,14 +31,14 @@ export const QuestionEdit = ({ problem }) => {
         {show && (
           <div className="absolute origin-top-right right-0 z-10 mt-2 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
             <div
-              className="py-1"
+              className="py-1 "
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="options-menu"
             >
               <a
                 href="#"
-                onClick={() => handleUpdate(problem.id)}
+                onClick={() => handleUpdate(resource.id)}
                 className="flex items-center px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
@@ -53,7 +48,7 @@ export const QuestionEdit = ({ problem }) => {
               </a>
               <a
                 href="#"
-                onClick={() => handleDelete(problem.id)}
+                onClick={() => handleDelete(resource.id)}
                 className="flex items-center  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
@@ -65,21 +60,12 @@ export const QuestionEdit = ({ problem }) => {
           </div>
         )}
       </div>
-      {deleteModal && (
-        <Modal closeModal={setDeleteModal} type={'edit'}>
-          <QuestionFormAdd
-            closeModal={setDeleteModal}
-            type={'edit'}
-            problem={problem}
-          />
-        </Modal>
-      )}
       {updateModal && (
         <Modal closeModal={setUpdateModal} type={'edit'}>
-          <QuestionFormEdit
+          <ResourceFormEdit
             closeModal={setUpdateModal}
             type={'edit'}
-            problem={problem}
+            resource={resource}
           />
         </Modal>
       )}

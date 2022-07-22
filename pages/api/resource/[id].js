@@ -2,15 +2,15 @@ import prisma from '../../../lib/prisma';
 
 // DELETE /api/problem/:id
 export default async function handle(req, res) {
-  const problemId = req.query.id;
-  const { difficulty, category, solved, name } = req.body;
+  const resourceId = req.query.id;
+  const { link, name } = req.body;
   if (req.method === 'DELETE') {
     try {
-      const deletedProblem = await prisma.problemDetails.delete({
-        where: { id: parseInt(problemId) },
+      const deletedResource = await prisma.resourceDetails.delete({
+        where: { id: parseInt(resourceId) },
       });
 
-      return res.status(200).json(deletedProblem, { success: true });
+      return res.status(200).json(deletedResource, { success: true });
     } catch (error) {
       console.error('Request error', error);
       res
@@ -19,17 +19,15 @@ export default async function handle(req, res) {
     }
   } else if (req.method === 'PUT') {
     try {
-      const updatedProblem = await prisma.problemDetails.update({
-        where: { id: parseInt(problemId) },
+      const updatedResource = await prisma.resourceDetails.update({
+        where: { id: parseInt(resourceId) },
         data: {
           name,
-          difficulty,
-          category,
-          solved,
+          link,
         },
       });
 
-      return res.status(200).json(updatedProblem, { success: true });
+      return res.status(200).json(updatedResource, { success: true });
     } catch (error) {
       console.error('Request error', error);
       res

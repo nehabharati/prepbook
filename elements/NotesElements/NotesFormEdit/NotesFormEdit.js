@@ -1,22 +1,28 @@
 import { useState } from 'react';
-import { Form } from '../Form';
-import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '..';
-import { customStylesForm } from '../../constants/customStyles';
+import { Form } from '../../Form';
+import { CustomInput } from '..';
 
-export const NotesForm = ({ closeModal }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState(new Date());
+export const NotesFormEdit = ({ note }) => {
+  const [title, setTitle] = useState(note.title);
+  const [description, setDescription] = useState(note.description);
+  const [link, setLink] = useState(note.link);
 
-  const handleName = (e) => setName(e.target.value);
+  const handleName = (e) => setTitle(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, id) => {
     e.preventDefault();
-    const body = { name, description };
+    const linkRegex = title.split(' ').map((i) => i.toLowerCase());
+    const linkNew = linkRegex.join('-');
+    const body = {
+      title,
+      link: linkNew,
+      description,
+    };
     console.log(body);
     try {
-      const response = await fetch('/api/notes', {
-        method: 'POST',
+      const response = await fetch(`/api/note/${id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
@@ -24,7 +30,7 @@ export const NotesForm = ({ closeModal }) => {
         console.log('something went wrong');
         //set an error banner here
       } else {
-        resetForm();
+        window.location.reload();
         console.log('form submitted successfully !!!');
         //set a success banner here
       }
@@ -33,20 +39,22 @@ export const NotesForm = ({ closeModal }) => {
       console.log('there was an error submitting', error);
     }
   };
-
-  const resetForm = () => {
-    setName('');
-    setDescription('');
-  };
   return (
     <div className="relative flex-auto">
       <Form>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e, note.id)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
-            <CustomInput label={'Name'} handleEntry={handleName} />
+            <CustomInput
+              label={'Title'}
+              value={title}
+              placeholder={'Please enter the title'}
+              handleEntry={handleName}
+            />
             <CustomInput
               label={'Description'}
               handleEntry={handleDescription}
+              value={description}
+              placeholder={'Please give a description'}
             />
             <div>
               <div className="flex items-center justify-end py-4 border-t border-solid border-slate-200 rounded-b">

@@ -1,40 +1,56 @@
-import { useState, useEffect } from 'react';
-import { Form } from '../Form';
-import { PrismaClient } from '@prisma/client';
-import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '..';
-import { customStylesForm } from '../../constants/customStyles';
+import { useState, useRef } from 'react';
+import { Form } from '../../Form';
+import { useRouter } from 'next/router';
+import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
+import { customStylesForm } from '../../../constants/customStyles';
 
-// const prisma = new PrismaClient();
-
-export const QuestionFormEdit = ({ closeModal, type, problem }) => {
-  console.log(problem);
-  const [name, setName] = useState(problem.name);
-  const [difficulty, setDifficulty] = useState(problem.difficulty);
-  const [category, setCategory] = useState(problem.category);
-  const [solved, setSolved] = useState(problem.solved);
+export const QuestionFormAdd = ({ closeModal, type, problem }) => {
+  const [name, setName] = useState('');
+  const [difficulty, setDifficulty] = useState('Easy');
+  const [category, setCategory] = useState(null);
+  const [solved, setSolved] = useState(false);
+  const formRef = useRef();
+  const router = useRouter();
+  const { platform } = router.query;
 
   const handleName = (e) => setName(e.target.value);
   const handleDifficulty = (e) => setDifficulty(e.value);
-  const handleCategory = (e) => {
-    let a = category.split(',');
-    a.push(e[0].value);
-    setCategory(a.join(','));
-  };
-  const handleSolved = (e) => {
-    console.log(e);
-    setSolved(e.target.value);
-  };
-  const handleSubmit = async (e, id) => {
+  const handleCategory = (e) => setCategory(e);
+  const handleSolved = (e) => setSolved(e.target.value);
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const linkRegex = name.split(' ').map((i) => i.toLowerCase());
+    const link = linkRegex.join('-');
+    let eachCategory = category?.map((i) => i.label).join(',');
     let isSolved = solved === 'No' ? false : true;
-    const body = { name, difficulty, category, solved: isSolved };
-
-    await fetch(`/api/problem/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    window.location.reload();
+    const body = {
+      name,
+      link,
+      difficulty,
+      platform,
+      category: eachCategory,
+      solved: isSolved,
+    };
+    console.log(body);
+    try {
+      const response = await fetch('/api/problems', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (response.status !== 200) {
+        console.log('something went wrong');
+        //set an error banner here
+      } else {
+        closeModal(false);
+        window.location.reload();
+        console.log('form submitted successfully !!!');
+        //set a success banner here
+      }
+      //check response, if success is false, dont take them to success page
+    } catch (error) {
+      console.log('there was an error submitting', error);
+    }
   };
 
   const categories = [
@@ -88,13 +104,14 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
   return (
     <div className="relative flex-auto">
       <Form>
-        <form onSubmit={(e) => handleSubmit(e, problem.id)}>
+        <form ref={formRef} onSubmit={(e) => handleSubmit(e)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
             <CustomInput
               label={'Name'}
               handleEntry={handleName}
-              value={name}
+              value={problem?.name ? problem?.name : name}
               placeholder={'Please enter the name'}
+              name="e"
             />
             <div>
               <label htmlFor="difficulty">Difficulty</label>
@@ -119,7 +136,7 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
                     key: 'Hard',
                   },
                 ]}
-                value={difficulty}
+                value={problem?.difficulty ? problem?.difficulty : difficulty}
               />
             </div>
             <div>
@@ -128,7 +145,7 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
               <MultiSelect
                 options={categories}
                 placeholder="Select category"
-                value={category}
+                value={problem?.category ? problem?.category : category}
                 handleChange={handleCategory}
                 // isSearchable={true}
                 multi={true}
@@ -136,7 +153,7 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
             </div>
             <CustomRadio
               label={'Have you solved the question?'}
-              value={solved}
+              value={problem?.solved ? problem?.solved : solved}
               onChange={handleSolved}
             />
             {/* <CustomInput label={'Solved'} handleEntry={handleSolved} /> */}

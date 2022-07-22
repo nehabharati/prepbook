@@ -20,11 +20,4 @@ export const platforms = [
     tag: 'codechef',
     color: 'gray',
   },
-  {
-    name: 'Codechef',
-    description: 'Make your Codechef question list here',
-    image: 'https://dummyimage.com/420x260',
-    tag: 'codechef',
-    color: 'gray',
-  },
 ];
