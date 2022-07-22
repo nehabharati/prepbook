@@ -1,38 +1,39 @@
 import {
   Modal,
   Sidebar,
-  NotesForm,
+  ResourceForm,
   Back,
   List,
   Table,
   NoteEdit,
+  ResourceEdit,
 } from '../../elements';
 import Link from 'next/link';
 // import styles from './QuestionList.module.css';
 import { useState, useEffect } from 'react';
 
-export const NotesList = ({ notes }) => {
+export const ResourcesList = ({ resources }) => {
   const [showModal, setShowModal] = useState(false);
-  const [notesList, setNotesList] = useState([]);
+  const [resourceList, setResourceList] = useState([]);
   const handleModal = () => setShowModal(!showModal);
   const a = ['title'];
 
   useEffect(() => {
-    setNotesList(notes);
-  }, [notes]);
+    setResourceList(resources);
+  }, [resources]);
 
   return (
     <div className="flex w-full">
       {showModal && (
         <Modal closeModal={setShowModal}>
-          <NotesForm closeModal={setShowModal} />
+          <ResourceForm closeModal={setShowModal} />
         </Modal>
       )}
       <Sidebar />
 
       <div className="flex flex-col w-10/12 my-6">
         <Back />
-        <h1 className="mx-6">Notes</h1>
+        <h1 className="mx-6">Resources</h1>
 
         <button
           onClick={handleModal}
@@ -40,8 +41,8 @@ export const NotesList = ({ notes }) => {
         >
           Add
         </button>
-        {notesList?.length >= 1 ? (
-          <Table problems={notes} parameters={a} setList={setNotesList}>
+        {resourceList?.length >= 1 ? (
+          <Table problems={resources} parameters={a} setList={setResourceList}>
             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
               <tr>
                 <th className="p-2 whitespace-nowrap">
@@ -56,26 +57,21 @@ export const NotesList = ({ notes }) => {
               </tr>
             </thead>
             <tbody className="text-sm divide-y divide-gray-100 cursor-pointer">
-              {notesList.map((note) => (
-                <tr key={note.id}>
+              {resourceList.map((resource) => (
+                <tr key={resource.id}>
                   <td className="py-2 px-0 m-0 whitespace-nowrap table-cell align-middle">
                     <div className="font-medium text-gray-800 ">
-                      {note.title}
+                      {resource.name}
                     </div>
                   </td>
                   <td className="py-2 px-0 m-0 whitespace-nowrap table-cell align-middle">
-                    <div className="text-gray-800 ">{note.description}</div>
+                    <div className="text-gray-800 ">{resource.link}</div>
                   </td>
 
                   <td className="py-2 px-0 m-0 whitespace-nowrap  flex items-center justify-end">
                     <div className="rounded-sm py-1 text-xs float-right flex items-center">
                       <span className="mx-4">{new Date().toDateString()}</span>
-                      <NoteEdit note={note} />
-                      <Link href={`/notes/${note.link}`} key={note.id}>
-                        <span className="rounded-lg py-1 ml-4 px-2 text-xs text-white float-right flex items-center bg-black">
-                          Open
-                        </span>
-                      </Link>
+                      <ResourceEdit resource={resource} />
                     </div>
                   </td>
                 </tr>

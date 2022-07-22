@@ -1,11 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/Image';
 import Options from './assets/options.svg';
-import { NotesForm, Modal } from '..';
+import { NotesFormEdit, Modal } from '../..';
 
-export const NoteEdit = ({ showModal }) => {
+export const NoteEdit = ({ note }) => {
   const [show, setShow] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
+
+  const handleDelete = async (id) => {
+    await fetch(`/api/note/${id}`, {
+      method: 'DELETE',
+    });
+    window.location.reload();
+  };
+
+  const handleUpdate = async (id) => {
+    setUpdateModal(!updateModal);
+    console.log(id);
+  };
 
   return (
     <>
@@ -29,7 +41,7 @@ export const NoteEdit = ({ showModal }) => {
             >
               <a
                 href="#"
-                onClick={() => setUpdateModal(!updateModal)}
+                onClick={() => handleUpdate(note.id)}
                 className="flex items-center px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
@@ -39,6 +51,7 @@ export const NoteEdit = ({ showModal }) => {
               </a>
               <a
                 href="#"
+                onClick={() => handleDelete(note.id)}
                 className="flex items-center  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
@@ -51,8 +64,12 @@ export const NoteEdit = ({ showModal }) => {
         )}
       </div>
       {updateModal && (
-        <Modal closeModal={setUpdateModal}>
-          <NotesForm closeModal={setUpdateModal} />
+        <Modal closeModal={setUpdateModal} type={'edit'}>
+          <NotesFormEdit
+            closeModal={setUpdateModal}
+            type={'edit'}
+            note={note}
+          />
         </Modal>
       )}
     </>

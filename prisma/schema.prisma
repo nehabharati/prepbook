@@ -11,12 +11,21 @@ datasource db {
 
 model NoteDetails {
   id Int @id @default(autoincrement())
+  title String 
+  link String
+  description String?
+}
+
+model ResourceDetails {
+  id Int @id @default(autoincrement())
   name String 
+  link String?
 }
  
 model ProblemDetails {
   id    Int    @id @default(autoincrement())
   name String 
+  platform String
   link String
   difficulty String?
   category String? 

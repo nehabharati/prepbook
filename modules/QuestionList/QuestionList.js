@@ -1,7 +1,5 @@
 import { Modal, Sidebar, QuestionFormAdd, Back } from '../../elements';
 import { useEffect } from 'react';
-import { problems } from './constants';
-import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 import { QuestionEdit, Table } from '../../elements';
 
@@ -11,34 +9,15 @@ import { useRouter } from 'next/router';
 
 export const QuestionList = ({ problems }) => {
   const [showModal, setShowModal] = useState(false);
-  const [problemList, setProblemList] = useState(problems);
+  const [problemList, setProblemList] = useState([]);
   const router = useRouter();
   const { platform } = router.query;
-  console.log(problems);
-  // useEffect(() => {
-  //   getProblems();
-  // }, []);
+  useEffect(() => {
+    let displayResults = problems?.filter((i) => i.platform === platform);
+    problems && setProblemList(displayResults);
+  }, [problems]);
 
-  // const getProblems = async () => {
-  //   try {
-  //     const response = await fetch('/api/problems', {
-  //       method: 'GET',
-  //       headers: { 'Content-Type': 'application/json' },
-  //     });
-  //     setProblemList(await response.json());
-  //     if (response.status !== 200) {
-  //       console.log('something went wrong');
-  //       //set an error banner here
-  //     } else {
-  //       console.log('problems retrieved successfully !!!');
-  //       //set a success banner here
-  //     }
-  //     //check response, if success is false, dont take them to success page
-  //   } catch (error) {
-  //     console.log('there was an error submitting', error);
-  //   }
-  // };
-
+  console.log(problemList);
   return (
     <div className="flex w-full">
       {showModal && (
@@ -68,7 +47,7 @@ export const QuestionList = ({ problems }) => {
         >
           Add
         </button>
-        {problemList.length > 0 ? (
+        {problemList?.length > 0 ? (
           <Table>
             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
               <tr>
@@ -93,8 +72,9 @@ export const QuestionList = ({ problems }) => {
               </tr>
             </thead>
             <tbody className="text-sm divide-y divide-gray-100 cursor-pointer">
-              {problemList.map((problem) => (
+              {problemList?.map((problem) => (
                 <tr>
+                  {console.log(problem)}
                   <>
                     <td className="p-2 whitespace-nowrap">
                       <div className="flex items-center">
