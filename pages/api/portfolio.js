@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    return await addNote(req, res);
+    return await addPortfolio(req, res);
   } else if (req.method === 'GET') {
-    return await getNotes(req, res);
+    return await getPortfolio(req, res);
   } else {
     return res
       .status(405)
@@ -14,9 +14,9 @@ export default async function handler(req, res) {
   }
 }
 
-async function getNotes(req, res) {
+async function getPortfolio(req, res) {
   try {
-    const notes = await prisma.noteDetails.findMany();
+    const notes = await prisma.portfolioDetails.findMany();
     return res.status(200).json(notes, { success: true });
   } catch (error) {
     console.error('Request error', error);
@@ -26,19 +26,22 @@ async function getNotes(req, res) {
   }
 }
 
-async function addNote(req, res) {
+async function addPortfolio(req, res) {
   const body = req.body;
   try {
-    const newEntry = await prisma.noteDetails.create({
+    const newEntry = await prisma.portfolioDetails.create({
       data: {
-        title: body.title,
-        description: body.description,
+        name: body.name,
+        image: body.image,
         link: body.link,
+        technologies: body.technologies,
       },
     });
     return res.status(200).json(newEntry, { success: true });
   } catch (error) {
     console.error('Request error', error);
-    res.status(500).json({ error: 'Error adding new note', success: false });
+    res
+      .status(500)
+      .json({ error: 'Error adding new portfolio', success: false });
   }
 }

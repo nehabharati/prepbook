@@ -3,7 +3,6 @@ import { Hero } from '../modules';
 import prisma from '../lib/prisma';
 
 export default function Home({ feed }) {
-  console.log(feed);
   return (
     <div>
       {/* <Sidebar /> */}

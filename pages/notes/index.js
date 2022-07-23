@@ -30,7 +30,6 @@ export default function Notes() {
 
   return (
     <div>
-      {console.log(notes)}
       <NotesList notes={notes} />
     </div>
   );

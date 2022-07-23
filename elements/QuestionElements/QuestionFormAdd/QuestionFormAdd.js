@@ -31,7 +31,6 @@ export const QuestionFormAdd = ({ closeModal, type, problem }) => {
       category: eachCategory,
       solved: isSolved,
     };
-    console.log(body);
     try {
       const response = await fetch('/api/problems', {
         method: 'POST',

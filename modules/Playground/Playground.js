@@ -31,10 +31,7 @@ export const Playground = () => {
   //   const enterPress = useKeyPress('Enter');
   //   const ctrlPress = useKeyPress('Control');
 
-  console.log(router);
-
   const onSelectChange = (sl) => {
-    // console.log('selected Option...', sl);
     setLanguage(sl);
   };
 

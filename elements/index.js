@@ -14,5 +14,7 @@ export * from './CustomRadio';
 export * from './Back';
 export * from './MultiSelect';
 export * from './QuestionElements';
+export * from './PortfolioElements';
 export * from './NotesElements';
 export * from './ResourcesElements';
+export * from './Image';

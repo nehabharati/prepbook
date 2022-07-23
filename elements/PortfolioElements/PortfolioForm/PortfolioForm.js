@@ -1,55 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from '../../Form';
-import { CustomInput } from '../../CustomInput';
+import { CustomInput } from '../../';
 
-export const ResourceFormEdit = ({ closeModal, resource }) => {
-  const [name, setName] = useState(resource.name);
-  const [link, setLink] = useState(resource.link);
+export const PortfolioForm = ({ closeModal }) => {
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+  const [technologies, setTechnologies] = useState('');
+  const [image, setImage] = useState('');
 
   const handleName = (e) => setName(e.target.value);
   const handleLink = (e) => setLink(e.target.value);
+  const handleImage = (e) => setImage(e.target.value);
+  const handleTechnologies = (e) => setTechnologies(e.target.value);
 
-  const handleSubmit = async (e, id) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const body = {
-      name,
-      link,
-    };
+    const body = { name, link, technologies, image };
+    console.log(body);
     try {
-      const response = await fetch(`/api/resource/${id}`, {
-        method: 'PUT',
+      const response = await fetch('/api/portfolio', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       if (response.status !== 200) {
         console.log('something went wrong');
-        //set an error banner here
       } else {
         window.location.reload();
         console.log('form submitted successfully !!!');
-        //set a success banner here
       }
-      //check response, if success is false, dont take them to success page
     } catch (error) {
       console.log('there was an error submitting', error);
     }
   };
+
+  useEffect(() => {
+    console.log(localStorage.getItem(image));
+    setImage(localStorage.getItem(image));
+  }, []);
+  console.log(image);
   return (
     <div className="relative flex-auto">
       <Form>
-        <form onSubmit={(e) => handleSubmit(e, resource.id)}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
             <CustomInput
               label={'Name'}
-              value={name}
               placeholder={'Please enter the name'}
               handleEntry={handleName}
             />
             <CustomInput
+              label={'Image'}
+              placeholder={'Please paste you image URL'}
+              handleEntry={handleImage}
+            />
+            <CustomInput
               label={'Link'}
               handleEntry={handleLink}
-              value={link}
-              placeholder={'Please give a link'}
+              placeholder={'Please enter the github link'}
+            />
+            <CustomInput
+              label={'Technologies'}
+              handleEntry={handleTechnologies}
+              placeholder={'Please enter the list of technologies'}
             />
             <div>
               <div className="flex items-center justify-end py-4 border-t border-solid border-slate-200 rounded-b">

@@ -15,7 +15,7 @@ export default async function handle(req, res) {
       console.error('Request error', error);
       res
         .status(500)
-        .json({ error: 'Error deleting platform', success: false });
+        .json({ error: 'Error deleting resource', success: false });
     }
   } else if (req.method === 'PUT') {
     try {
@@ -32,7 +32,7 @@ export default async function handle(req, res) {
       console.error('Request error', error);
       res
         .status(500)
-        .json({ error: 'Error updating platform', success: false });
+        .json({ error: 'Error updating resource', success: false });
     }
   }
 }

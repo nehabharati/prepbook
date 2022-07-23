@@ -3,10 +3,10 @@ import Fuse from 'fuse.js';
 import { useEffect } from 'react';
 import styles from './SearchAndFilter.module.css';
 
-export const SearchAndFilter = ({ keys, list, setList }) => {
-  console.log(list, keys);
-  // const fuse = new Fuse(list, {
-  //   keys: keys,
+export const SearchAndFilter = (props) => {
+  console.log(props);
+  // const fuse = new Fuse(props?.list, {
+  //   keys: props.keys,
   //   includeScore: true,
   // });
 
@@ -14,12 +14,11 @@ export const SearchAndFilter = ({ keys, list, setList }) => {
   //   const results = fuse.search('easy');
   //   const searchResults = results?.map((result) => result.item);
   //   console.log(searchResults);
-  //   setList(searchResults);
+  //   props.setList(searchResults);
   // }, []);
-
   return (
     <div className="flex justify-between">
-      <Search keys={keys} list={list} />
+      <Search {...props} />
       <Filter />
     </div>
   );

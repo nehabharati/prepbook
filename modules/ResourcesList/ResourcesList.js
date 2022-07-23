@@ -3,25 +3,20 @@ import {
   Sidebar,
   ResourceForm,
   Back,
-  List,
   Table,
-  NoteEdit,
   ResourceEdit,
 } from '../../elements';
-import Link from 'next/link';
-// import styles from './QuestionList.module.css';
 import { useState, useEffect } from 'react';
 
 export const ResourcesList = ({ resources }) => {
   const [showModal, setShowModal] = useState(false);
   const [resourceList, setResourceList] = useState([]);
   const handleModal = () => setShowModal(!showModal);
-  const a = ['title'];
 
   useEffect(() => {
     setResourceList(resources);
   }, [resources]);
-
+  console.log(resources);
   return (
     <div className="flex w-full">
       {showModal && (
@@ -34,7 +29,6 @@ export const ResourcesList = ({ resources }) => {
       <div className="flex flex-col w-10/12 my-6">
         <Back />
         <h1 className="mx-6">Resources</h1>
-
         <button
           onClick={handleModal}
           className="px-4 py-2 w-24 text-sm mx-6 my-4 tracking-wide text-white capitalize transition-colors duration-200 transform bg-black rounded-lg hover:bg-gray-800 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
@@ -42,7 +36,7 @@ export const ResourcesList = ({ resources }) => {
           Add
         </button>
         {resourceList?.length >= 1 ? (
-          <Table problems={resources} parameters={a} setList={setResourceList}>
+          <Table list={resources} setList={setResourceList}>
             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
               <tr>
                 <th className="p-2 whitespace-nowrap">

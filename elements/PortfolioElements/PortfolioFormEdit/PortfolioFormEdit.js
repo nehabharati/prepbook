@@ -1,22 +1,27 @@
 import { useState } from 'react';
-import { Form } from '../../Form';
-import { CustomInput } from '../../CustomInput';
+import { Form, CustomInput } from '../../';
 
-export const ResourceFormEdit = ({ closeModal, resource }) => {
-  const [name, setName] = useState(resource.name);
-  const [link, setLink] = useState(resource.link);
+export const PortfolioFormEdit = ({ closeModal, portfolio }) => {
+  const [name, setName] = useState(portfolio.name);
+  const [link, setLink] = useState(portfolio.link);
+  const [technologies, setTechnologies] = useState(portfolio.technologies);
+  const [image, setImage] = useState(portfolio.image);
 
   const handleName = (e) => setName(e.target.value);
   const handleLink = (e) => setLink(e.target.value);
+  const handleImage = (e) => setImage(e.target.value);
+  const handleTechnologies = (e) => setTechnologies(e.target.value);
 
   const handleSubmit = async (e, id) => {
     e.preventDefault();
     const body = {
       name,
+      image,
       link,
+      technologies,
     };
     try {
-      const response = await fetch(`/api/resource/${id}`, {
+      const response = await fetch(`/api/portfolio/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -34,10 +39,11 @@ export const ResourceFormEdit = ({ closeModal, resource }) => {
       console.log('there was an error submitting', error);
     }
   };
+  console.log(portfolio);
   return (
     <div className="relative flex-auto">
       <Form>
-        <form onSubmit={(e) => handleSubmit(e, resource.id)}>
+        <form onSubmit={(e) => handleSubmit(e, portfolio.id)}>
           <div className="grid grid-cols-1 gap-6 mt-4 mb-4">
             <CustomInput
               label={'Name'}
@@ -46,10 +52,22 @@ export const ResourceFormEdit = ({ closeModal, resource }) => {
               handleEntry={handleName}
             />
             <CustomInput
+              label={'Image'}
+              value={image}
+              placeholder={'Please paste you image URL'}
+              handleEntry={handleImage}
+            />
+            <CustomInput
               label={'Link'}
               handleEntry={handleLink}
               value={link}
-              placeholder={'Please give a link'}
+              placeholder={'Please enter the github link'}
+            />
+            <CustomInput
+              label={'Technologies'}
+              handleEntry={handleTechnologies}
+              value={technologies}
+              placeholder={'Please enter the list of technologies'}
             />
             <div>
               <div className="flex items-center justify-end py-4 border-t border-solid border-slate-200 rounded-b">

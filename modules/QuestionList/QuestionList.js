@@ -17,7 +17,6 @@ export const QuestionList = ({ problems }) => {
     problems && setProblemList(displayResults);
   }, [problems]);
 
-  console.log(problemList);
   return (
     <div className="flex w-full">
       {showModal && (
@@ -74,7 +73,6 @@ export const QuestionList = ({ problems }) => {
             <tbody className="text-sm divide-y divide-gray-100 cursor-pointer">
               {problemList?.map((problem) => (
                 <tr>
-                  {console.log(problem)}
                   <>
                     <td className="p-2 whitespace-nowrap">
                       <div className="flex items-center">

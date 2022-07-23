@@ -32,3 +32,11 @@ model ProblemDetails {
   solved Boolean?
 }
  
+model PortfolioDetails {
+  id    Int    @id @default(autoincrement())
+  name String 
+  image String?
+  link String
+  technologies String
+}
+ 

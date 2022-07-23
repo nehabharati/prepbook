@@ -3,7 +3,6 @@ import prisma from '../../../lib/prisma';
 // DELETE /api/problem/:id
 export default async function handle(req, res) {
   const noteId = req.query.id;
-  console.log('noteId', noteId);
   const { title, description } = req.body;
   if (req.method === 'DELETE') {
     try {
@@ -29,9 +28,7 @@ export default async function handle(req, res) {
       return res.status(200).json(updatedNote, { success: true });
     } catch (error) {
       console.error('Request error', error);
-      res
-        .status(500)
-        .json({ error: 'Error updating platform', success: false });
+      res.status(500).json({ error: 'Error updating note', success: false });
     }
   }
 }
