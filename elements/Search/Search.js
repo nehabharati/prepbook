@@ -4,28 +4,11 @@ import { useEffect } from 'react';
 
 export const Search = (props) => {
   console.log(props);
-  // const fuse = new Fuse(list, {
-  //   keys: keys,
-  //   includeScore: true,
-  // });
-
-  // useEffect(() => {
-  //   const results = fuse.search('easy');
-  //   const searchResults = results?.map((result) => result.item);
-  //   console.log(searchResults);
-  //   setList(searchResults);
-  // }, []);
-
   const handleChange = (e) => {
     let filteredNotes = props.list.filter((item) => {
       if (e.target.value === '') {
         return item;
       }
-      console.log(
-        item.title,
-        e.target.value,
-        item.title.toLowerCase().includes('Note 1')
-      );
       return item.title.toLowerCase().includes(e.target.value);
     });
 

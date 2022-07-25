@@ -7,9 +7,9 @@ export const Input = ({ customInput, setCustomInput }) => {
       rows="5"
       value={customInput}
       onChange={(e) => setCustomInput(e.target.value)}
-      placeholder={`Custom input`}
+      placeholder={`Enter Custom input here`}
       className={classNames(
-        'focus:outline-none w-full border-4 border-black z-10 rounded-md px-4 py-2   transition duration-200 bg-white mt-2'
+        'focus:outline-none w-full border-4 border-black z-10 px-4 py-2 transition duration-200 bg-white'
       )}
     ></textarea>
   );

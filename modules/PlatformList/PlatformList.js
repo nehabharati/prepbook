@@ -7,9 +7,9 @@ import { useState } from 'react';
 export const PlatformList = () => {
   const [showModal, setShowModal] = useState(false);
   const colors = {
-    yellow: 'bg-yellow-300 border-yellow-500',
-    green: 'bg-green-300 border-green-500',
-    gray: 'bg-gray-200 border-gray-500',
+    yellow: 'border-yellow-500',
+    green: 'border-green-500',
+    gray: 'border-gray-500',
   };
   return (
     <div className="flex w-full">
@@ -33,7 +33,7 @@ export const PlatformList = () => {
               {platforms.map((item) => (
                 <div
                   key={item.name}
-                  className={`p-4 border-4 rounded-xl mr-4 mb-4 ${
+                  className={`p-4 border-4 rounded-xl mr-4 mb-4 shadow-lg transition-all duration-500 hover:-translate-y-2 ${
                     item.color ? colors[item.color] : 'bg-white'
                   }`}
                 >

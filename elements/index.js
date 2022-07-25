@@ -18,3 +18,4 @@ export * from './PortfolioElements';
 export * from './NotesElements';
 export * from './ResourcesElements';
 export * from './Image';
+export * from './CustomTooltip';
