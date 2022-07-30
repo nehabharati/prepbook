@@ -31,7 +31,7 @@ export default function Code() {
   };
 
   return (
-    <div className="relative mb-4">
+    <div className="relative mb-4 w-full">
       <Playground codeText={codeValue} />
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CodeEditorWindow, Dropdown, Output, Back } from '../../elements';
+import { Header } from '../Header';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -208,68 +209,71 @@ export const Playground = ({ codeText }) => {
         draggable
         pauseOnHover
       /> */}
+      <Header />
       <Back />
 
-      <div className="flex">
-        <div className="flex flex-col w-8/12 ml-4">
+      <div>
+        <div className="flex flex-col w-full px-4">
           <h1 className="my-4 capitalize">{code?.split('-').join(' ')}</h1>
-          <div className="flex bg-black w-full rounded-t-lg">
-            <div className="px-4 py-2">
-              <Dropdown
-                onChange={onSelectChange}
-                placeholder="Language"
-                options={languageOptions}
-                defaultValue={languageOptions[0]}
-                styles={customStyles}
-              />
+          <div className="flex md:flex-row flex-col">
+            <div className="bg-black w-full md:mx-4 rounded-t-lg">
+              <div className="flex flex-col md:flex-row w-full">
+                <div className="px-4 py-2">
+                  <Dropdown
+                    onChange={onSelectChange}
+                    placeholder="Language"
+                    options={languageOptions}
+                    defaultValue={languageOptions[0]}
+                    styles={customStyles}
+                  />
+                </div>
+                <div className="px-4 py-2">
+                  <Dropdown
+                    onChange={handleThemeChange}
+                    defaultValue={theme}
+                    styles={customStyles}
+                    placeholder="Theme"
+                    options={Object.entries(monacoThemes).map(
+                      ([themeId, themeName]) => ({
+                        label: themeName,
+                        value: themeId,
+                        key: themeId,
+                      })
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full justify-start items-end">
+                <CodeEditorWindow
+                  code={code}
+                  onChange={onChange}
+                  language={language?.value}
+                  theme={theme.value}
+                />
+              </div>
             </div>
-            <div className="px-4 py-2">
-              <Dropdown
-                onChange={handleThemeChange}
-                defaultValue={theme}
-                styles={customStyles}
-                placeholder="Theme"
-                options={Object.entries(monacoThemes).map(
-                  ([themeId, themeName]) => ({
-                    label: themeName,
-                    value: themeId,
-                    key: themeId,
-                  })
-                )}
-              />
+            <div className="right-container flex flex-shrink-0 w-full md:w-[30%] flex-col">
+              <Output outputDetails={outputDetails} />
+              <div className="flex flex-col items-end">
+                {/* <Input customInput={customInput} setCustomInput={setCustomInput} /> */}
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={!code}
+                  className={classNames(
+                    'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
+                    !code ? 'opacity-50' : ''
+                  )}
+                >
+                  {processing ? 'Processing...' : 'Compile and Execute'}
+                </button>
+              </div>
+              {/* {outputDetails && <OutputDetails outputDetails={outputDetails} />} */}
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-row items-start px-4">
-        <div className="flex flex-col w-9/12 h-full justify-start items-end">
-          <CodeEditorWindow
-            code={code}
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
-          />
-        </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
-          <Output outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            {/* <Input customInput={customInput} setCustomInput={setCustomInput} /> */}
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              disabled={!code}
-              className={classNames(
-                'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
-                !code ? 'opacity-50' : ''
-              )}
-            >
-              {processing ? 'Processing...' : 'Compile and Execute'}
-            </button>
-          </div>
-          {/* {outputDetails && <OutputDetails outputDetails={outputDetails} />} */}
-        </div>
-      </div>
       {/* <Footer /> */}
     </>
   );

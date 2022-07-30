@@ -7,12 +7,14 @@ import {
   NoteEdit,
 } from '../../elements';
 import Link from 'next/link';
+import { Header } from '../Header';
 import { useState, useEffect } from 'react';
 
 export const NotesList = ({ notes }) => {
   const [showModal, setShowModal] = useState(false);
   const [notesList, setNotesList] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const searchParameters = ['title'];
   const handleModal = () => setShowModal(!showModal);
 
   useEffect(() => {
@@ -20,15 +22,15 @@ export const NotesList = ({ notes }) => {
   }, [notes]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex flex-col w-full">
       {showModal && (
         <Modal closeModal={setShowModal}>
           <NotesForm closeModal={setShowModal} />
         </Modal>
       )}
-      <Sidebar />
+      <Header />
 
-      <div className="flex flex-col w-10/12 my-6">
+      <div className="flex flex-col w-full">
         <Back />
         <h1 className="mx-6">Notes</h1>
 
@@ -38,7 +40,11 @@ export const NotesList = ({ notes }) => {
         >
           Add
         </button>
-        <Table list={notes} setList={setNotesList}>
+        <Table
+          list={notes}
+          setList={setNotesList}
+          searchParameters={searchParameters}
+        >
           <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
             <tr>
               <th className="p-2 whitespace-nowrap">

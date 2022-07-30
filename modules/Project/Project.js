@@ -5,6 +5,7 @@ import {
   PortfolioForm,
   Back,
 } from '../../elements';
+import { Header } from '../Header';
 import { useState, useEffect } from 'react';
 
 export const Project = ({ portfolio }) => {
@@ -17,15 +18,15 @@ export const Project = ({ portfolio }) => {
   }, [portfolio]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex flex-col w-full">
       {showModal && (
         <Modal closeModal={setShowModal}>
           <PortfolioForm closeModal={setShowModal} />
         </Modal>
       )}
-      <Sidebar />
+      <Header />
 
-      <div className="flex flex-col w-10/12 my-6">
+      <div className="flex flex-col w-full md:w-10/12">
         <Back />
         <h1 className="mx-6">Portfolio</h1>
         <button
@@ -34,53 +35,51 @@ export const Project = ({ portfolio }) => {
         >
           Add
         </button>
-        <section className="text-gray-600 body-font w-100 px-5 ">
-          <div className="container px-5 py-4 mx-auto">
-            <div className="flex flex-wrap -m-4">
-              {projectList?.length > 0 ? (
-                projectList?.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`lg:w-1/3 md:w-full p-4 w-full border-4 border-black rounded-xl mr-4`}
-                  >
-                    <a className="block relative h-48 rounded overflow-hidden border border-gray-500">
-                      <img
-                        alt="ecommerce"
-                        className="object-cover object-center w-full h-full block"
-                        src={item.image}
-                      />
-                    </a>
-                    <div className="w-full">
-                      <div className="flex flex-col my-2">
-                        <div className="flex justify-between items-baseline">
-                          <h2 className="text-gray-900 title-font text-lg font-medium">
-                            {item.name}
-                          </h2>
-                          <PortfolioEdit portfolio={item} />
-                        </div>
+        <section className="text-gray-600 body-font w-100">
+          <div className="flex flex-wrap">
+            {projectList?.length > 0 ? (
+              projectList?.map((item) => (
+                <div
+                  key={item.id}
+                  className={`lg:w-1/3 md:w-full p-4 w-full border-4 border-black rounded-xl mx-6 mb-4`}
+                >
+                  <a className="block relative h-48 rounded overflow-hidden border border-gray-500">
+                    <img
+                      alt="ecommerce"
+                      className="object-cover object-center w-full h-full block"
+                      src={item.image}
+                    />
+                  </a>
+                  <div className="w-full">
+                    <div className="flex flex-col my-2">
+                      <div className="flex justify-between items-baseline">
+                        <h2 className="text-gray-900 title-font text-lg font-medium">
+                          {item.name}
+                        </h2>
+                        <PortfolioEdit portfolio={item} />
+                      </div>
 
-                        <div className="flex items-end justify-between mt-2">
-                          <p className="text-sm">{item.technologies}</p>
-                          <a
-                            target="_blank"
-                            href={item.link}
-                            key={item.name}
-                            className="text-sm"
-                          >
-                            github
-                          </a>
-                        </div>
+                      <div className="flex items-end justify-between mt-2">
+                        <p className="text-sm">{item.technologies}</p>
+                        <a
+                          target="_blank"
+                          href={item.link}
+                          key={item.name}
+                          className="text-sm"
+                        >
+                          github
+                        </a>
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
-                <p className="flex justify-center w-full my-20">
-                  There are no items to display. Click on add to start your list
-                  👆🤗
-                </p>
-              )}
-            </div>
+                </div>
+              ))
+            ) : (
+              <p className="flex justify-center w-full my-20">
+                There are no items to display. Click on add to start your list
+                👆🤗
+              </p>
+            )}
           </div>
         </section>
       </div>

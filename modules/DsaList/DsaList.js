@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Modal, Sidebar, PlatformForm } from '../../elements';
+import { Modal, PlatformForm } from '../../elements';
+import { Header } from '../';
 import { SearchAndFilter } from '..';
 import { platforms } from './constants';
 import styles from './PlatformList.module.css';
@@ -21,12 +22,12 @@ export const PlatformList = () => {
           <PlatformForm />
         </Modal>
       )}
-      <Sidebar />
+      <Header />
 
-      <div className="flex flex-col w-10/12 my-6">
+      <div className="flex flex-col w-full md:w-10/12 my-6">
         <SearchAndFilter
           keys={parameters}
-          list={platforms}
+          list={platformList}
           setList={setPlatformList}
         />
         <button
@@ -38,10 +39,10 @@ export const PlatformList = () => {
         <section className="text-gray-600 body-font w-100 px-5 ">
           <div className="container px-5 py-4 mx-auto">
             <div className="flex flex-wrap -m-4">
-              {platforms.map((item) => (
+              {platformList.map((item) => (
                 <div
                   key={item.name}
-                  className={`lg:w-1/4 md:w-full p-4 w-full border-4 border-yellow-500 rounded-xl mr-4 ${
+                  className={`lg:w-1/4 md:w-full p-4 w-full border-t-4 border-yellow-500 rounded-xl mr-4 ${
                     item.color ? colors[item.color] : 'bg-white'
                   }`}
                 >

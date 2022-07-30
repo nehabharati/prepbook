@@ -11,7 +11,8 @@ import React, { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { BsTwitter } from 'react-icons/bs';
-import { Back, Sidebar } from '../../elements';
+import { Back } from '../../elements';
+import { Header } from '../Header';
 
 export const NotesEditor = ({ text }) => {
   const router = useRouter();
@@ -71,9 +72,9 @@ export const NotesEditor = ({ text }) => {
   });
 
   return (
-    <div className="flex ">
-      <Sidebar />
-      <div className="flex flex-col w-10/12 py-6">
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="flex flex-col w-full">
         <Back />
         <div className="flex justify-between items-center mb-4">
           <h1 className="mx-6 capitalize">{note?.split('-').join(' ')}</h1>

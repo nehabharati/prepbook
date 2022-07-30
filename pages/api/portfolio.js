@@ -28,13 +28,14 @@ async function getPortfolio(req, res) {
 
 async function addPortfolio(req, res) {
   const body = req.body;
+  const { name, image, link, technologies } = body;
   try {
     const newEntry = await prisma.portfolioDetails.create({
       data: {
-        name: body.name,
-        image: body.image,
-        link: body.link,
-        technologies: body.technologies,
+        name,
+        image,
+        link,
+        technologies,
       },
     });
     return res.status(200).json(newEntry, { success: true });

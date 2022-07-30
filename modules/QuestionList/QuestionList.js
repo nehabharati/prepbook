@@ -1,7 +1,14 @@
-import { Modal, Sidebar, QuestionFormAdd, Back } from '../../elements';
+import {
+  Modal,
+  Sidebar,
+  QuestionFormAdd,
+  Back,
+  QuestionEdit,
+  Table,
+} from '../../elements';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { QuestionEdit, Table } from '../../elements';
+import { Header } from '../';
 
 // import styles from './QuestionList.module.css';
 import { useState } from 'react';
@@ -10,35 +17,25 @@ import { useRouter } from 'next/router';
 export const QuestionList = ({ problems }) => {
   const [showModal, setShowModal] = useState(false);
   const [problemList, setProblemList] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const router = useRouter();
   const { platform } = router.query;
+  const searchParameters = ['name', 'difficulty', 'solved', 'category'];
   useEffect(() => {
-    let displayResults = problems?.filter((i) => i.platform === platform);
-    problems && setProblemList(displayResults);
+    problems && setProblemList(problems);
   }, [problems]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex flex-col w-full h-screen">
       {showModal && (
-        <Modal closeModal={setShowModal} type={'add'}>
-          <QuestionFormAdd
-            closeModal={setShowModal}
-            type={'add'}
-            problems={problems}
-          />
+        <Modal closeModal={setShowModal}>
+          <QuestionFormAdd closeModal={setShowModal} problems={problems} />
         </Modal>
       )}
-      <Sidebar />
+      <Header />
 
-      <div className="flex flex-col w-10/12 my-6">
+      <div className="flex flex-col w-full my-6">
         <Back />
-        {/* <div className="mx-6">
-          <SearchAndFilter
-            keys={a}
-            list={problems}
-            setProblemList={setProblemList}
-          />
-        </div> */}
         <h1 className="mx-6 capitalize">{platform} questions</h1>
         <button
           onClick={() => setShowModal(!showModal)}
@@ -46,30 +43,34 @@ export const QuestionList = ({ problems }) => {
         >
           Add
         </button>
-        {problemList?.length > 0 ? (
-          <Table>
-            <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-              <tr>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Name</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Difficulty</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Category</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Solved</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left"></div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left"></div>
-                </th>
-              </tr>
-            </thead>
+        <Table
+          list={problemList}
+          setList={setProblemList}
+          searchParameters={searchParameters}
+        >
+          <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+            <tr>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Name</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Difficulty</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Category</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Solved</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left"></div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left"></div>
+              </th>
+            </tr>
+          </thead>
+          {problemList?.length > 0 ? (
             <tbody className="text-sm divide-y divide-gray-100 cursor-pointer">
               {problemList?.map((problem) => (
                 <tr>
@@ -113,12 +114,23 @@ export const QuestionList = ({ problems }) => {
                 </tr>
               ))}
             </tbody>
-          </Table>
-        ) : (
-          <p className="flex justify-center w-full my-20">
-            There are no items to display. Click on add to start your list 👆🤗
-          </p>
-        )}
+          ) : (
+            <tbody>
+              <tr className="relative">
+                <td
+                  className={`absolute left-1/2 transform -translate-x-1/2 ${
+                    showSearchResults ? 'my-20' : 'my-6'
+                  }`}
+                >
+                  {!showSearchResults
+                    ? 'Sorry there are no search results to display😟'
+                    : 'There are no items to display. Click on add to start your list 👆🤗'}
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          )}
+        </Table>
       </div>
     </div>
   );

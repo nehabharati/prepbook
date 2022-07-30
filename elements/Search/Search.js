@@ -1,15 +1,12 @@
-import Fuse from 'fuse.js';
-import { list } from 'postcss';
-import { useEffect } from 'react';
-
 export const Search = (props) => {
-  console.log(props);
   const handleChange = (e) => {
-    let filteredNotes = props.list.filter((item) => {
+    let filteredNotes = props.list?.filter((item, idx) => {
       if (e.target.value === '') {
         return item;
       }
-      return item.title.toLowerCase().includes(e.target.value);
+      return item[props.searchParameters[idx]]
+        .toLowerCase()
+        .includes(e.target.value);
     });
 
     props.setList(filteredNotes);
