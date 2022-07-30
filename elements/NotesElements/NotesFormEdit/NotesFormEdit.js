@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { Form } from '../../Form';
-import { CustomInput } from '..';
+import { Form } from '../../';
+import { CustomInput } from '../../';
 
-export const NotesFormEdit = ({ note }) => {
+export const NotesFormEdit = ({ closeModal, note }) => {
   const [title, setTitle] = useState(note.title);
   const [description, setDescription] = useState(note.description);
-  const [link, setLink] = useState(note.link);
 
   const handleName = (e) => setTitle(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
-
+  console.log(note);
   const handleSubmit = async (e, id) => {
     e.preventDefault();
     const linkRegex = title.split(' ').map((i) => i.toLowerCase());
@@ -19,7 +18,6 @@ export const NotesFormEdit = ({ note }) => {
       link: linkNew,
       description,
     };
-    console.log(body);
     try {
       const response = await fetch(`/api/note/${id}`, {
         method: 'PUT',

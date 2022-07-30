@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Output.module.css';
 
 export const Output = ({ outputDetails }) => {
-  // console.log(outputDetails);
   const getOutput = () => {
     let statusId = outputDetails?.status?.id;
 
@@ -38,11 +37,8 @@ export const Output = ({ outputDetails }) => {
 
   return (
     <>
-      <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2">
-        Output
-      </h1>
       <div
-        className={`${styles.output} w-full h-56 bg-gray-900 rounded-md text-white font-normal text-sm overflow-y-auto`}
+        className={`${styles.output} w-full my-4 md:my-0 h-56 bg-gray-900 text-white font-normal text-sm overflow-y-auto`}
       >
         {outputDetails ? <>{getOutput()}</> : null}
       </div>

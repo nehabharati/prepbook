@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { Form } from '../../Form';
-import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '..';
+import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
 import { customStylesForm } from '../../../constants/customStyles';
-
-// const prisma = new PrismaClient();
 
 export const QuestionFormEdit = ({ closeModal, type, problem }) => {
   const [name, setName] = useState(problem.name);
   const [difficulty, setDifficulty] = useState(problem.difficulty);
   const [category, setCategory] = useState(problem.category);
-  const [link, setLink] = useState(problem.link);
   const [platform, setPlatform] = useState(problem.platform);
   const [solved, setSolved] = useState(problem.solved);
 
@@ -21,7 +18,6 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
     setCategory(a.join(','));
   };
   const handleSolved = (e) => setSolved(e.target.value);
-  console.log(name);
 
   const handleSubmit = async (e, id) => {
     e.preventDefault();
@@ -36,7 +32,6 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
       category,
       solved: isSolved,
     };
-    console.log(body);
     try {
       const response = await fetch(`/api/problem/${id}`, {
         method: 'PUT',

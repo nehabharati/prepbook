@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form } from '../../Form';
 import { CustomInput } from '../../CustomInput';
 
-export const ResourceFormEdit = ({ resource }) => {
+export const ResourceFormEdit = ({ closeModal, resource }) => {
   const [name, setName] = useState(resource.name);
   const [link, setLink] = useState(resource.link);
 
@@ -15,7 +15,6 @@ export const ResourceFormEdit = ({ resource }) => {
       name,
       link,
     };
-    console.log(body);
     try {
       const response = await fetch(`/api/resource/${id}`, {
         method: 'PUT',

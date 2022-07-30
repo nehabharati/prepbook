@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { CodeEditorWindow, Dropdown, Output, Input } from '../../elements';
+import { CodeEditorWindow, Dropdown, Output, Back } from '../../elements';
+import { Header } from '../Header';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -20,21 +21,23 @@ import { defineTheme } from '../../lib/defineTheme';
 
 const javascriptDefault = `// some comment`;
 
-export const Playground = () => {
-  const [code, setCode] = useState(javascriptDefault);
+export const Playground = ({ codeText }) => {
+  const [codeValue, setCodeValue] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState('');
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState('cobalt');
   const [language, setLanguage] = useState(languageOptions[0]);
   const router = useRouter();
+  const { code } = router.query;
   //   const enterPress = useKeyPress('Enter');
   //   const ctrlPress = useKeyPress('Control');
 
-  console.log(router);
+  useEffect(() => {
+    setCodeValue(codeText);
+  }, []);
 
   const onSelectChange = (sl) => {
-    // console.log('selected Option...', sl);
     setLanguage(sl);
   };
 
@@ -42,13 +45,15 @@ export const Playground = () => {
   //     if (enterPress && ctrlPress) {
   //       console.log('enterPress', enterPress);
   //       console.log('ctrlPress', ctrlPress);
-  //       handleCompile();
+  //       handleSubmit();
   //     }
   //   }, [ctrlPress, enterPress]);
   const onChange = (action, data) => {
+    console.log(action);
     switch (action) {
       case 'code': {
-        setCode(data);
+        console.log(data);
+        setCodeValue(data);
         break;
       }
       default: {
@@ -57,12 +62,15 @@ export const Playground = () => {
     }
   };
 
-  const handleCompile = () => {
+  console.log(code?.split('-').join(' '), codeValue);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setProcessing(true);
     const formData = {
       language_id: language.id,
       // encode source code in base64
-      source_code: btoa(code),
+      source_code: btoa(codeValue),
       stdin: btoa(customInput),
     };
 
@@ -91,6 +99,25 @@ export const Playground = () => {
         setProcessing(false);
         console.log(error);
       });
+
+    let title = code?.split('-').join(' ');
+    const body = { title, code: codeValue };
+
+    try {
+      const response = await fetch('/api/code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (response.status !== 200) {
+        console.log('something went wrong');
+      } else {
+        // window.location.reload();
+        console.log('form submitted successfully !!!');
+      }
+    } catch (error) {
+      console.log('there was an error submitting', error);
+    }
   };
 
   const checkStatus = async (token) => {
@@ -128,7 +155,7 @@ export const Playground = () => {
       // showErrorToast();
     }
   };
-
+  console.log(code);
   function handleThemeChange(th) {
     const theme = th;
     console.log('theme...', theme);
@@ -168,7 +195,7 @@ export const Playground = () => {
   //       progress: undefined,
   //     });
   //   };
-
+  console.log(code);
   return (
     <>
       {/* <ToastContainer
@@ -182,60 +209,71 @@ export const Playground = () => {
         draggable
         pauseOnHover
       /> */}
-      <div className="flex flex-row">
-        <div className="px-4 py-2">
-          <Dropdown
-            onChange={onSelectChange}
-            placeholder="Language"
-            options={languageOptions}
-            defaultValue={languageOptions[0]}
-            styles={customStyles}
-          />
-        </div>
-        <div className="px-4 py-2">
-          <Dropdown
-            onChange={handleThemeChange}
-            defaultValue={theme}
-            styles={customStyles}
-            placeholder="Theme"
-            options={Object.entries(monacoThemes).map(
-              ([themeId, themeName]) => ({
-                label: themeName,
-                value: themeId,
-                key: themeId,
-              })
-            )}
-          />
-        </div>
-      </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
-        <div className="flex flex-col w-full h-full justify-start items-end">
-          <CodeEditorWindow
-            code={code}
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
-          />
-        </div>
+      <Header />
+      <Back />
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
-          <Output outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            <Input customInput={customInput} setCustomInput={setCustomInput} />
-            <button
-              onClick={handleCompile}
-              disabled={!code}
-              className={classNames(
-                'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
-                !code ? 'opacity-50' : ''
-              )}
-            >
-              {processing ? 'Processing...' : 'Compile and Execute'}
-            </button>
+      <div>
+        <div className="flex flex-col w-full px-4">
+          <h1 className="my-4 capitalize">{code?.split('-').join(' ')}</h1>
+          <div className="flex md:flex-row flex-col">
+            <div className="bg-black w-full md:mx-4 rounded-t-lg">
+              <div className="flex flex-col md:flex-row w-full">
+                <div className="px-4 py-2">
+                  <Dropdown
+                    onChange={onSelectChange}
+                    placeholder="Language"
+                    options={languageOptions}
+                    defaultValue={languageOptions[0]}
+                    styles={customStyles}
+                  />
+                </div>
+                <div className="px-4 py-2">
+                  <Dropdown
+                    onChange={handleThemeChange}
+                    defaultValue={theme}
+                    styles={customStyles}
+                    placeholder="Theme"
+                    options={Object.entries(monacoThemes).map(
+                      ([themeId, themeName]) => ({
+                        label: themeName,
+                        value: themeId,
+                        key: themeId,
+                      })
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full justify-start items-end">
+                <CodeEditorWindow
+                  code={code}
+                  onChange={onChange}
+                  language={language?.value}
+                  theme={theme.value}
+                />
+              </div>
+            </div>
+            <div className="right-container flex flex-shrink-0 w-full md:w-[30%] flex-col">
+              <Output outputDetails={outputDetails} />
+              <div className="flex flex-col items-end">
+                {/* <Input customInput={customInput} setCustomInput={setCustomInput} /> */}
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={!code}
+                  className={classNames(
+                    'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
+                    !code ? 'opacity-50' : ''
+                  )}
+                >
+                  {processing ? 'Processing...' : 'Compile and Execute'}
+                </button>
+              </div>
+              {/* {outputDetails && <OutputDetails outputDetails={outputDetails} />} */}
+            </div>
           </div>
-          {/* {outputDetails && <OutputDetails outputDetails={outputDetails} />} */}
         </div>
       </div>
+
       {/* <Footer /> */}
     </>
   );

@@ -13,11 +13,7 @@ export const NoteEdit = ({ note }) => {
     });
     window.location.reload();
   };
-
-  const handleUpdate = async (id) => {
-    setUpdateModal(!updateModal);
-    console.log(id);
-  };
+  const handleUpdate = async () => setUpdateModal(!updateModal);
 
   return (
     <>
@@ -65,11 +61,7 @@ export const NoteEdit = ({ note }) => {
       </div>
       {updateModal && (
         <Modal closeModal={setUpdateModal} type={'edit'}>
-          <NotesFormEdit
-            closeModal={setUpdateModal}
-            type={'edit'}
-            note={note}
-          />
+          <NotesFormEdit closeModal={setUpdateModal} note={note} />
         </Modal>
       )}
     </>

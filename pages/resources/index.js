@@ -27,9 +27,5 @@ export default function Resources() {
       console.log('there was an error retrieving', error);
     }
   };
-  return (
-    <div>
-      <ResourcesList resources={resources} />
-    </div>
-  );
+  return <ResourcesList resources={resources} />;
 }

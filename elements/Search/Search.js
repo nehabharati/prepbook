@@ -1,4 +1,16 @@
-export const Search = ({ list, keys }) => {
+export const Search = (props) => {
+  const handleChange = (e) => {
+    let filteredNotes = props.list?.filter((item, idx) => {
+      if (e.target.value === '') {
+        return item;
+      }
+      return item[props.searchParameters[idx]]
+        .toLowerCase()
+        .includes(e.target.value);
+    });
+
+    props.setList(filteredNotes);
+  };
   return (
     <section className="relative rounded-md">
       <div className="relative">
@@ -22,6 +34,7 @@ export const Search = ({ list, keys }) => {
           type="text"
           className="w-full py-1 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Search"
+          onChange={handleChange}
         />
       </div>
     </section>

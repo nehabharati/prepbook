@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/Image';
 import Options from './assets/options.svg';
 import { ResourceFormEdit, Modal } from '../..';
@@ -6,14 +6,13 @@ import { ResourceFormEdit, Modal } from '../..';
 export const ResourceEdit = ({ resource }) => {
   const [show, setShow] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
-
+  console.log(resource);
   const handleDelete = async (id) => {
     await fetch(`/api/resource/${id}`, {
       method: 'DELETE',
     });
     window.location.reload();
   };
-
   const handleUpdate = async () => setUpdateModal(!updateModal);
 
   return (
@@ -62,11 +61,7 @@ export const ResourceEdit = ({ resource }) => {
       </div>
       {updateModal && (
         <Modal closeModal={setUpdateModal} type={'edit'}>
-          <ResourceFormEdit
-            closeModal={setUpdateModal}
-            type={'edit'}
-            resource={resource}
-          />
+          <ResourceFormEdit closeModal={setUpdateModal} resource={resource} />
         </Modal>
       )}
     </>

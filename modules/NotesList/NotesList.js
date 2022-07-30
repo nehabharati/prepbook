@@ -3,34 +3,34 @@ import {
   Sidebar,
   NotesForm,
   Back,
-  List,
   Table,
   NoteEdit,
 } from '../../elements';
 import Link from 'next/link';
-// import styles from './QuestionList.module.css';
+import { Header } from '../Header';
 import { useState, useEffect } from 'react';
 
 export const NotesList = ({ notes }) => {
   const [showModal, setShowModal] = useState(false);
   const [notesList, setNotesList] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const searchParameters = ['title'];
   const handleModal = () => setShowModal(!showModal);
-  const a = ['title'];
 
   useEffect(() => {
     setNotesList(notes);
   }, [notes]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex flex-col w-full">
       {showModal && (
         <Modal closeModal={setShowModal}>
           <NotesForm closeModal={setShowModal} />
         </Modal>
       )}
-      <Sidebar />
+      <Header />
 
-      <div className="flex flex-col w-10/12 my-6">
+      <div className="flex flex-col w-full">
         <Back />
         <h1 className="mx-6">Notes</h1>
 
@@ -40,23 +40,27 @@ export const NotesList = ({ notes }) => {
         >
           Add
         </button>
-        {notesList?.length >= 1 ? (
-          <Table problems={notes} parameters={a} setList={setNotesList}>
-            <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
-              <tr>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Title</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Description</div>
-                </th>
-                <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left"></div>
-                </th>
-              </tr>
-            </thead>
+        <Table
+          list={notes}
+          setList={setNotesList}
+          searchParameters={searchParameters}
+        >
+          <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 rounded-lg">
+            <tr>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Title</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left">Description</div>
+              </th>
+              <th className="p-2 whitespace-nowrap">
+                <div className="font-semibold text-left"></div>
+              </th>
+            </tr>
+          </thead>
+          {notesList?.length > 0 ? (
             <tbody className="text-sm divide-y divide-gray-100 cursor-pointer">
-              {notesList.map((note) => (
+              {notesList?.map((note) => (
                 <tr key={note.id}>
                   <td className="py-2 px-0 m-0 whitespace-nowrap table-cell align-middle">
                     <div className="font-medium text-gray-800 ">
@@ -81,12 +85,23 @@ export const NotesList = ({ notes }) => {
                 </tr>
               ))}
             </tbody>
-          </Table>
-        ) : (
-          <p className="flex justify-center w-full my-20">
-            There are no items to display. Click on add to start your list 👆🤗
-          </p>
-        )}
+          ) : (
+            <tbody>
+              <tr className="relative">
+                <td
+                  className={`absolute left-1/2 transform -translate-x-1/2 ${
+                    showSearchResults ? 'my-20' : 'my-6'
+                  }`}
+                >
+                  {!showSearchResults
+                    ? 'Sorry there are no search results to display😟'
+                    : 'There are no items to display. Click on add to start your list 👆🤗'}
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          )}
+        </Table>
       </div>
     </div>
   );

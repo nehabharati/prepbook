@@ -1,5 +1,4 @@
 export const CustomRadio = ({ id, label, value, onChange }) => {
-  console.log(value);
   return (
     <div>
       <span>{label}</span>

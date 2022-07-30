@@ -28,7 +28,6 @@ async function getNotes(req, res) {
 
 async function addNote(req, res) {
   const body = req.body;
-  console.log('body', body);
   try {
     const newEntry = await prisma.noteDetails.create({
       data: {

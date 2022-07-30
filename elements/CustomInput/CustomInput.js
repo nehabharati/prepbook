@@ -1,5 +1,4 @@
 export const CustomInput = ({ label, handleEntry, placeholder, value }) => {
-  console.log(value);
   return (
     <div>
       <label className="text-gray-700 dark:text-gray-200" htmlFor="name">
