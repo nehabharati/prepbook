@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/Image';
-import { PrismaClient } from '@prisma/client';
 import Options from './assets/options.svg';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { QuestionFormAdd, QuestionFormEdit, Modal } from '../..';
 
 export const QuestionEdit = ({ problem }) => {
@@ -26,10 +26,10 @@ export const QuestionEdit = ({ problem }) => {
         <div>
           <button
             onClick={() => setShow(!show)}
-            className="border-0 flex items-center justify-center w-full"
+            className="border-0 flex items-center justify-center w-full px-4"
             id="options-menu"
           >
-            <Image src={Options} width={15} height={15} />
+            <BsThreeDotsVertical />
           </button>
         </div>
         {show && (
@@ -46,7 +46,7 @@ export const QuestionEdit = ({ problem }) => {
                 className="flex items-center px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
-                <span className="flex flex-col">
+                <span className="flex flex-col text-xs">
                   <span>Edit</span>
                 </span>
               </a>
@@ -56,7 +56,7 @@ export const QuestionEdit = ({ problem }) => {
                 className="flex items-center  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                 role="menuitem"
               >
-                <span className="flex flex-col">
+                <span className="flex flex-col text-xs">
                   <span>Delete</span>
                 </span>
               </a>
@@ -75,11 +75,7 @@ export const QuestionEdit = ({ problem }) => {
       )}
       {updateModal && (
         <Modal closeModal={setUpdateModal} type={'edit'}>
-          <QuestionFormEdit
-            closeModal={setUpdateModal}
-            type={'edit'}
-            problem={problem}
-          />
+          <QuestionFormEdit closeModal={setUpdateModal} problem={problem} />
         </Modal>
       )}
     </>

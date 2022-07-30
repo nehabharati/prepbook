@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+import { useSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -14,6 +15,7 @@ export default async function handler(req, res) {
 }
 
 async function readProblems(req, res) {
+  console.log('request', req);
   try {
     const problems = await prisma.problemDetails.findMany();
     return res.status(200).json(problems, { success: true });
@@ -32,6 +34,7 @@ async function addProblem(req, res) {
       data: {
         name: body.name,
         link: body.link,
+        authorId: body.authorId,
         platform: body.platform,
         difficulty: body.difficulty,
         category: body.category,

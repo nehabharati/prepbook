@@ -24,7 +24,7 @@ export const PlatformList = () => {
       )}
       <Header />
 
-      <div className="flex flex-col w-full md:w-10/12 my-6">
+      <div className="flex flex-col w-full md:w-10/12">
         <SearchAndFilter
           keys={parameters}
           list={platformList}
@@ -36,9 +36,9 @@ export const PlatformList = () => {
         >
           Add
         </button>
-        <section className="text-gray-600 body-font w-100 px-5 ">
+        <section className="text-gray-600 body-font w-100 px-5">
           <div className="container px-5 py-4 mx-auto">
-            <div className="flex flex-wrap -m-4">
+            <div className="flex flex-wrap">
               {platformList.map((item) => (
                 <div
                   key={item.name}

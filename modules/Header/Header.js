@@ -9,9 +9,8 @@ export const Header = () => {
   const isActive = (pathname) => {
     return router.pathname === pathname;
   };
-  console.log(process.env.GITHUB_ID);
-  const { data: session, status } = useSession();
-
+  const { data: session, data, status } = useSession();
+  console.log(data);
   let left = (
     <div className="left">
       <Link href="/">
@@ -94,9 +93,9 @@ export const Header = () => {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
@@ -117,9 +116,9 @@ export const Header = () => {
                   stroke="currentColor"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
@@ -150,7 +149,7 @@ export const Header = () => {
                 <li className="list-none">
                   <a
                     className="md:p-4 py-2 block hover:text-purple-400"
-                    href="/dsa"
+                    href={`${session ? '/dsa' : '/api/auth/signin'}`}
                     onClick={() => setShowNav(false)}
                   >
                     DSA
@@ -159,7 +158,7 @@ export const Header = () => {
                 <li className="list-none">
                   <a
                     className="md:p-4 py-2 block hover:text-purple-400"
-                    href="/portfolio"
+                    href={`${session ? '/portfolio' : '/api/auth/signin'}`}
                     onClick={() => setShowNav(false)}
                   >
                     Portfolio
@@ -168,7 +167,7 @@ export const Header = () => {
                 <li className="list-none">
                   <a
                     className="md:p-4 py-2 block hover:text-purple-400"
-                    href="/notes"
+                    href={`${session ? '/notes' : '/api/auth/signin'}`}
                     onClick={() => setShowNav(false)}
                   >
                     Notes
@@ -177,7 +176,7 @@ export const Header = () => {
                 <li className="list-none">
                   <a
                     className="md:p-4 py-2 block hover:text-purple-400"
-                    href="/resources"
+                    href={`${session ? '/resources' : '/api/auth/signin'}`}
                     onClick={() => setShowNav(false)}
                   >
                     Resources
@@ -196,22 +195,34 @@ export const Header = () => {
             </div>
             <ul className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center cursor-pointer">
               <li className="list-none">
-                <a href="/dsa" className="mr-5 hover:text-gray-900">
+                <a
+                  href={`${session ? '/dsa' : '/api/auth/signin'}`}
+                  className="mr-5 hover:text-gray-900"
+                >
                   DSA
                 </a>
               </li>
               <li className="list-none">
-                <a href="/portfolio" className="mr-5 hover:text-gray-900">
+                <a
+                  href={`${session ? '/portfolio' : '/api/auth/signin'}`}
+                  className="mr-5 hover:text-gray-900"
+                >
                   Portfolio
                 </a>
               </li>
               <li className="list-none">
-                <a href="/notes" className="mr-5 hover:text-gray-900">
+                <a
+                  href={`${session ? '/notes' : '/api/auth/signin'}`}
+                  className="mr-5 hover:text-gray-900"
+                >
                   Notes
                 </a>
               </li>
               <li className="list-none">
-                <a href="/resources" className="mr-5 hover:text-gray-900">
+                <a
+                  href={`${session ? '/resources' : '/api/auth/signin'}`}
+                  className="mr-5 hover:text-gray-900"
+                >
                   Resources
                 </a>
               </li>

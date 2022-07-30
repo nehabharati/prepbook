@@ -10,8 +10,8 @@ export const Table = (props) => {
               <SearchAndFilter {...props} />
             </div>
 
-            <div className="px-3 py-2 overflow-scroll">
-              <table className="table-auto w-full rounded-lg overflow-visible">
+            <div className="px-3 py-2 overflow-scroll md:overflow-visible">
+              <table className="table-auto w-full rounded-lg md:overflow-visible">
                 {props.children}
               </table>
             </div>
