@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form } from '../../Form';
 import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
-import { customStylesForm } from '../../../constants/customStyles';
+import { customStylesForm } from '../../../constants/customStylesForm';
 
 export const QuestionFormEdit = ({ closeModal, problem }) => {
   const [name, setName] = useState(problem.name);
