@@ -9,12 +9,11 @@ export const Header = () => {
   const isActive = (pathname) => {
     return router.pathname === pathname;
   };
-  const { data: session, data, status } = useSession();
-  console.log(data);
+  const { data: session, status } = useSession();
   let left = (
     <div className="left">
       <Link href="/">
-        <a className="text-xl " data-active={isActive('/')}>
+        <a className="cursor-pointer text-xl " data-active={isActive('/')}>
           prepbook
         </a>
       </Link>
@@ -27,7 +26,7 @@ export const Header = () => {
     left = (
       <>
         <Link href="/">
-          <a className="text-xl " data-active={isActive('/')}>
+          <a className="cursor-pointer text-xl " data-active={isActive('/')}>
             prepbook
           </a>
         </Link>
@@ -56,7 +55,7 @@ export const Header = () => {
     left = (
       <>
         <Link href="/">
-          <span className="text-xl " data-active={isActive('/')}>
+          <span className="text-xl cursor-pointer" data-active={isActive('/')}>
             prepbook
           </span>
         </Link>
@@ -82,25 +81,6 @@ export const Header = () => {
           <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             {left}
           </div>
-          {/* <div>
-            <button onClick={() => setShowNav(!showNav)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                id="menu-button"
-                className="h-6 w-6 cursor-pointer block order-2 md:order-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div> */}
 
           <div>
             <div className="flex items-center">

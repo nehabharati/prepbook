@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/Image';
 import Options from './assets/options.svg';
 import { ResourceFormEdit, Modal } from '../..';
 
@@ -24,7 +23,7 @@ export const ResourceEdit = ({ resource }) => {
             className="border-0 flex items-center justify-center w-full"
             id="options-menu"
           >
-            <Image src={Options} width={15} height={15} />
+            <img src={Options} width={15} height={15} />
           </button>
         </div>
         {show && (
