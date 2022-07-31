@@ -3,7 +3,7 @@ import { Form } from '../../Form';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
-import { customStylesForm } from '../../../constants/customStyles';
+import { customStylesForm } from '../../../constants/customStylesForm';
 
 export const QuestionFormAdd = ({ closeModal, problem }) => {
   const [name, setName] = useState('');
