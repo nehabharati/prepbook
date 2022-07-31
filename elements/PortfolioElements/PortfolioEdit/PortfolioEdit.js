@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import Options from './assets/options.svg';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { PortfolioFormEdit, Modal } from '../..';
 
 export const PortfolioEdit = ({ portfolio }) => {
   const [show, setShow] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
-  console.log(portfolio);
+
   const handleDelete = async (id) => {
     await fetch(`/api/portfolio/${id}`, {
       method: 'DELETE',
@@ -13,7 +13,7 @@ export const PortfolioEdit = ({ portfolio }) => {
     window.location.reload();
   };
   const handleUpdate = async () => setUpdateModal(!updateModal);
-  console.log(portfolio);
+
   return (
     <>
       <div className="relative inline-block mb-2">
@@ -23,7 +23,7 @@ export const PortfolioEdit = ({ portfolio }) => {
             className="border-0 flex items-center justify-center w-full"
             id="options-menu"
           >
-            <img src={Options} width={15} height={15} />
+            <BsThreeDotsVertical />
           </button>
         </div>
         {show && (

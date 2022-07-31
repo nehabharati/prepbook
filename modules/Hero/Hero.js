@@ -1,5 +1,8 @@
 import styles from './Hero.module.css';
 import { Header } from '../Header';
+import { SiHashnode } from 'react-icons/si';
+// import { ReactComponent as Planetscale } from './assets/planetscale.svg';
+import PlanetscaleIcon from './assets/planetscale.svg';
 import Link from 'next/link';
 
 export const Hero = () => {
@@ -27,6 +30,18 @@ export const Hero = () => {
                 <Link href="/dsa">Get Started</Link>
               </button>
             </div>
+          </div>
+          <div className=" p-5 py-10 ">
+            <a
+              target="_blank"
+              href="https://www.planetscale.com"
+              className="mx-4"
+            >
+              Planetscale
+            </a>
+            <a target="_blank" href="https://www.hashnode.com" className="mx-4">
+              Hashnode
+            </a>
           </div>
         </div>
       </section>

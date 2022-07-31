@@ -33,6 +33,14 @@ export default function Code() {
   return (
     <div className="relative mb-4 w-full">
       <Playground codeText={codeValue} />
+      <div className="fixed bottom-0 p-5 py-10 w-full text-center">
+        <a target="_blank" href="https://www.planetscale.com" className="mx-4">
+          Planetscale
+        </a>
+        <a target="_blank" href="https://www.hashnode.com" className="mx-4">
+          Hashnode
+        </a>
+      </div>
     </div>
   );
 }

@@ -22,8 +22,8 @@ export const NotesEditor = ({ text }) => {
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    setNoteText(text);
-  }, [text]);
+    setNoteText(text ? text : noteText);
+  }, [text, content]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ export const NotesEditor = ({ text }) => {
       setContent(editor.getHTML());
     },
   });
-
+  console.log(text, noteText);
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -88,15 +88,24 @@ export const NotesEditor = ({ text }) => {
         <MenuBar editor={editor} />
 
         <div className="p-4 mx-6 border border-black rounded-md border-t-0">
-          <EditorContent editor={editor} className="focus:outline-0" />
+          <EditorContent
+            editor={editor}
+            className="focus:outline-0"
+            placeholder="Please type your note here"
+          />
         </div>
-
-        <div className="m-6">
-          <h4>Previous note</h4>
-          <div className="bg-stone-100 my-2 p-2 rounded-lg">
-            <div ref={ref} dangerouslySetInnerHTML={{ __html: text }} />
+        {console.log(text)}
+        {text && (
+          <div className="m-6">
+            <h4>Previous note</h4>
+            <div className="bg-stone-100 my-2 p-2 rounded-lg">
+              <div
+                ref={ref}
+                dangerouslySetInnerHTML={{ __html: text ? text : noteText }}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="flex items-baseline my-2 mx-6">
           <p>Want to share this with the world? Tweet it </p>
           <button className="bg-blue-400 rounded-lg px-2 py-1 mx-2 text-white capitalize">

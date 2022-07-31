@@ -1,11 +1,16 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { navLinks } from './constants';
 
 export const Header = () => {
   const [showNav, setShowNav] = useState(false);
   const router = useRouter();
+  const activeMenu = useMemo(
+    () => navLinks.find((menu) => menu.link === router.pathname),
+    [router.pathname]
+  );
   const isActive = (pathname) => {
     return router.pathname === pathname;
   };
@@ -126,42 +131,22 @@ export const Header = () => {
                 >
                   x
                 </button>
-                <li className="list-none">
-                  <a
-                    className="md:p-4 py-2 block hover:text-purple-400"
-                    href={`${session ? '/dsa' : '/api/auth/signin'}`}
-                    onClick={() => setShowNav(false)}
-                  >
-                    DSA
-                  </a>
-                </li>
-                <li className="list-none">
-                  <a
-                    className="md:p-4 py-2 block hover:text-purple-400"
-                    href={`${session ? '/portfolio' : '/api/auth/signin'}`}
-                    onClick={() => setShowNav(false)}
-                  >
-                    Portfolio
-                  </a>
-                </li>
-                <li className="list-none">
-                  <a
-                    className="md:p-4 py-2 block hover:text-purple-400"
-                    href={`${session ? '/notes' : '/api/auth/signin'}`}
-                    onClick={() => setShowNav(false)}
-                  >
-                    Notes
-                  </a>
-                </li>
-                <li className="list-none">
-                  <a
-                    className="md:p-4 py-2 block hover:text-purple-400"
-                    href={`${session ? '/resources' : '/api/auth/signin'}`}
-                    onClick={() => setShowNav(false)}
-                  >
-                    Resources
-                  </a>
-                </li>
+
+                {navLinks.map((nav) => (
+                  <li key={nav.id} className="list-none">
+                    <a
+                      className={` ${
+                        activeMenu?.id === nav.id
+                          ? 'border-white'
+                          : 'border-none'
+                      } md:p-4 border-b-2 py-2 block hover:text-purple-400`}
+                      href={'/dsa'}
+                      onClick={() => setShowNav(false)}
+                    >
+                      {nav.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -174,38 +159,21 @@ export const Header = () => {
               {left}
             </div>
             <ul className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center cursor-pointer">
-              <li className="list-none">
-                <a
-                  href={`${session ? '/dsa' : '/api/auth/signin'}`}
-                  className="mr-5 hover:text-gray-900"
-                >
-                  DSA
-                </a>
-              </li>
-              <li className="list-none">
-                <a
-                  href={`${session ? '/portfolio' : '/api/auth/signin'}`}
-                  className="mr-5 hover:text-gray-900"
-                >
-                  Portfolio
-                </a>
-              </li>
-              <li className="list-none">
-                <a
-                  href={`${session ? '/notes' : '/api/auth/signin'}`}
-                  className="mr-5 hover:text-gray-900"
-                >
-                  Notes
-                </a>
-              </li>
-              <li className="list-none">
-                <a
-                  href={`${session ? '/resources' : '/api/auth/signin'}`}
-                  className="mr-5 hover:text-gray-900"
-                >
-                  Resources
-                </a>
-              </li>
+              {navLinks.map((nav) => (
+                <li key={nav.id} className="list-none">
+                  <a
+                    className={` ${
+                      activeMenu?.id === nav.id
+                        ? 'border-blue-600'
+                        : 'border-none'
+                    } md:px-4 md:py-2 border-b-2 py-2 block hover:text-purple-400`}
+                    href={'/dsa'}
+                    onClick={() => setShowNav(false)}
+                  >
+                    {nav.name}
+                  </a>
+                </li>
+              ))}
             </ul>
             {right}
           </div>

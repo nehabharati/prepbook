@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Options from './assets/options.svg';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { ResourceFormEdit, Modal } from '../..';
 
 export const ResourceEdit = ({ resource }) => {
@@ -23,7 +23,7 @@ export const ResourceEdit = ({ resource }) => {
             className="border-0 flex items-center justify-center w-full"
             id="options-menu"
           >
-            <img src={Options} width={15} height={15} />
+            <BsThreeDotsVertical />
           </button>
         </div>
         {show && (

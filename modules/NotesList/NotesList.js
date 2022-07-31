@@ -1,11 +1,4 @@
-import {
-  Modal,
-  Sidebar,
-  NotesForm,
-  Back,
-  Table,
-  NoteEdit,
-} from '../../elements';
+import { Modal, NotesForm, Back, Table, NoteEdit } from '../../elements';
 import Link from 'next/link';
 import { Header } from '../Header';
 import { useState, useEffect } from 'react';

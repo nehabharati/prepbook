@@ -1,11 +1,7 @@
-import {
-  Sidebar,
-  Modal,
-  PortfolioEdit,
-  PortfolioForm,
-  Back,
-} from '../../elements';
+import { Modal, PortfolioEdit, PortfolioForm, Back } from '../../elements';
 import { Header } from '../Header';
+import { BsGithub } from 'react-icons/bs';
+
 import { useState, useEffect } from 'react';
 
 export const Project = ({ portfolio }) => {
@@ -59,15 +55,15 @@ export const Project = ({ portfolio }) => {
                         <PortfolioEdit portfolio={item} />
                       </div>
 
-                      <div className="flex items-end justify-between mt-2">
+                      <div className="flex items-center justify-between mt-2">
                         <p className="text-sm">{item.technologies}</p>
                         <a
                           target="_blank"
                           href={item.link}
                           key={item.name}
-                          className="text-sm"
+                          className="text-base"
                         >
-                          github
+                          <BsGithub />
                         </a>
                       </div>
                     </div>

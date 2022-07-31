@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Options from './assets/options.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { QuestionFormAdd, QuestionFormEdit, Modal } from '../..';
 

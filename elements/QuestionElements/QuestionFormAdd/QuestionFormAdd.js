@@ -3,7 +3,7 @@ import { Form } from '../../Form';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
-import { customStylesForm } from '../../../constants/customStylesForm';
+import { customStyles } from '../../../constants/customStyles';
 
 export const QuestionFormAdd = ({ closeModal, problem }) => {
   const [name, setName] = useState('');
@@ -52,9 +52,7 @@ export const QuestionFormAdd = ({ closeModal, problem }) => {
           closeModal(false);
           window.location.reload();
           console.log('form submitted successfully !!!');
-          //set a success banner here
         }
-        //check response, if success is false, dont take them to success page
       } catch (error) {
         console.log('there was an error submitting', error);
       }
@@ -125,7 +123,7 @@ export const QuestionFormAdd = ({ closeModal, problem }) => {
             <div>
               <label htmlFor="difficulty">Difficulty</label>
               <Dropdown
-                styles={customStylesForm}
+                styles={customStyles}
                 onChange={handleDifficulty}
                 placeholder="Choose the difficulty level of the problem"
                 options={[

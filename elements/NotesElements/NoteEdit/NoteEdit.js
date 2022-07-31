@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Options from './assets/options.svg';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { NotesFormEdit, Modal } from '../..';
 
 export const NoteEdit = ({ note }) => {
@@ -23,7 +23,7 @@ export const NoteEdit = ({ note }) => {
             className="border-0 flex items-center justify-center w-full"
             id="options-menu"
           >
-            <img src={Options} width={15} height={15} />
+            <BsThreeDotsVertical />
           </button>
         </div>
         {show && (
