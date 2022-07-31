@@ -1,13 +1,10 @@
-import { Dialog, Transition } from '@headlessui/react';
 import styles from './Modal.module.css';
-import { Fragment, useState } from 'react';
-import { Form } from '../Form';
 
 export const Modal = ({ closeModal, children, type }) => {
   return (
     <div className={`z-50 ${styles.overlay}`}>
       <div
-        className={`p-4 translate-y-10 md:relative md:left-1/2 transform md:-translate-x-1/2 md:translate-y-10`}
+        className={`p-4 translate-y-10 md:w-1/2 md:relative md:left-1/2 transform md:-translate-x-1/2 md:translate-y-10`}
       >
         <div className="border-0 rounded-xl  bg-white px-6">
           <div className="flex items-start justify-between py-4 border-b border-solid border-slate-200 rounded-t">

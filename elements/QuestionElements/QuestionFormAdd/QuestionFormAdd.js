@@ -1,55 +1,65 @@
 import { useState, useRef } from 'react';
 import { Form } from '../../Form';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
 import { customStylesForm } from '../../../constants/customStyles';
 
-export const QuestionFormAdd = ({ closeModal, type, problem }) => {
+export const QuestionFormAdd = ({ closeModal, problem }) => {
   const [name, setName] = useState('');
-  const [difficulty, setDifficulty] = useState('Easy');
+  const [difficulty, setDifficulty] = useState('');
   const [category, setCategory] = useState(null);
-  const [solved, setSolved] = useState(false);
+  const [solved, setSolved] = useState(true);
+  const [showError, setShowError] = useState(false);
   const formRef = useRef();
   const router = useRouter();
   const { platform } = router.query;
+  const { data: session } = useSession();
 
   const handleName = (e) => setName(e.target.value);
   const handleDifficulty = (e) => setDifficulty(e.value);
   const handleCategory = (e) => setCategory(e);
   const handleSolved = (e) => setSolved(e.target.value);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const linkRegex = name.split(' ').map((i) => i.toLowerCase());
     const link = linkRegex.join('-');
-    let eachCategory = category?.map((i) => i.label).join(',');
+    let eachCategory = category?.map((i) => i.label).join(', ');
     let isSolved = solved === 'No' ? false : true;
+
     const body = {
       name,
       link,
       difficulty,
       platform,
+      authorId: session?.user.name || null,
       category: eachCategory,
       solved: isSolved,
     };
-    try {
-      const response = await fetch('/api/problems', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      if (response.status !== 200) {
-        console.log('something went wrong');
-        //set an error banner here
-      } else {
-        closeModal(false);
-        window.location.reload();
-        console.log('form submitted successfully !!!');
-        //set a success banner here
+
+    if (name && category && solved && difficulty) {
+      try {
+        const response = await fetch('/api/problems', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (response.status !== 200) {
+          console.log('something went wrong');
+          //set an error banner here
+        } else {
+          closeModal(false);
+          window.location.reload();
+          console.log('form submitted successfully !!!');
+          //set a success banner here
+        }
+        //check response, if success is false, dont take them to success page
+      } catch (error) {
+        console.log('there was an error submitting', error);
       }
-      //check response, if success is false, dont take them to success page
-    } catch (error) {
-      console.log('there was an error submitting', error);
     }
+    setShowError(true);
   };
 
   const categories = [
@@ -110,7 +120,7 @@ export const QuestionFormAdd = ({ closeModal, type, problem }) => {
               handleEntry={handleName}
               value={problem?.name ? problem?.name : name}
               placeholder={'Please enter the name'}
-              name="e"
+              name="name"
             />
             <div>
               <label htmlFor="difficulty">Difficulty</label>
@@ -135,19 +145,25 @@ export const QuestionFormAdd = ({ closeModal, type, problem }) => {
                     key: 'Hard',
                   },
                 ]}
+                errorMessage={
+                  showError &&
+                  difficulty === '' &&
+                  'Please enter a difficulty level'
+                }
                 value={problem?.difficulty ? problem?.difficulty : difficulty}
               />
             </div>
             <div>
               <label htmlFor="category">Category</label>
-
               <MultiSelect
                 options={categories}
                 placeholder="Select category"
                 value={problem?.category ? problem?.category : category}
                 handleChange={handleCategory}
-                // isSearchable={true}
                 multi={true}
+                errorMessage={
+                  showError && category === null && 'Please select categories'
+                }
               />
             </div>
             <CustomRadio

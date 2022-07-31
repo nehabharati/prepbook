@@ -3,20 +3,21 @@ import { Form } from '../../Form';
 import { CustomInput, CustomRadio, Dropdown, MultiSelect } from '../../';
 import { customStylesForm } from '../../../constants/customStyles';
 
-export const QuestionFormEdit = ({ closeModal, type, problem }) => {
+export const QuestionFormEdit = ({ closeModal, problem }) => {
   const [name, setName] = useState(problem.name);
   const [difficulty, setDifficulty] = useState(problem.difficulty);
-  const [category, setCategory] = useState(problem.category);
-  const [platform, setPlatform] = useState(problem.platform);
+  const [category, setCategory] = useState(
+    problem?.category?.split(',').map((i) => {
+      return { label: i, value: i, key: i };
+    }) || null
+  );
+  const [platform] = useState(problem.platform);
   const [solved, setSolved] = useState(problem.solved);
+  const [showError, setShowError] = useState(false);
 
   const handleName = (e) => setName(e.target.value);
   const handleDifficulty = (e) => setDifficulty(e.value);
-  const handleCategory = (e) => {
-    let a = category.split(',');
-    a.push(e[0].value);
-    setCategory(a.join(','));
-  };
+  const handleCategory = (e) => setCategory(e);
   const handleSolved = (e) => setSolved(e.target.value);
 
   const handleSubmit = async (e, id) => {
@@ -24,33 +25,34 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
     const linkRegex = name.split(' ').map((i) => i.toLowerCase());
     const linkNew = linkRegex.join('-');
     let isSolved = solved === 'No' ? false : true;
+    let eachCategory = category?.map((i) => i.label).join(', ');
     const body = {
       name,
       link: linkNew,
       difficulty,
       platform,
-      category,
+      category: eachCategory,
       solved: isSolved,
     };
-    try {
-      const response = await fetch(`/api/problem/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      if (response.status !== 200) {
-        console.log('something went wrong');
-        //set an error banner here
-      } else {
-        closeModal(false);
-        window.location.reload();
-        console.log('form submitted successfully !!!');
-        //set a success banner here
+    if (name && category && solved && difficulty) {
+      try {
+        const response = await fetch(`/api/problem/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (response.status !== 200) {
+          console.log('something went wrong');
+        } else {
+          closeModal(false);
+          window.location.reload();
+          console.log('form submitted successfully !!!');
+        }
+      } catch (error) {
+        console.log('there was an error submitting', error);
       }
-      //check response, if success is false, dont take them to success page
-    } catch (error) {
-      console.log('there was an error submitting', error);
     }
+    setShowError(true);
   };
 
   const categories = [
@@ -100,7 +102,6 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
       key: 'Recursion',
     },
   ];
-
   return (
     <div className="relative flex-auto">
       <Form>
@@ -136,18 +137,24 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
                   },
                 ]}
                 value={difficulty}
+                errorMessage={
+                  showError &&
+                  difficulty === '' &&
+                  'Please enter a difficulty level'
+                }
               />
             </div>
             <div>
               <label htmlFor="category">Category</label>
-
               <MultiSelect
                 options={categories}
                 placeholder="Select category"
                 value={category}
                 handleChange={handleCategory}
-                // isSearchable={true}
                 multi={true}
+                errorMessage={
+                  showError && category === null && 'Please select categories'
+                }
               />
             </div>
             <CustomRadio
@@ -155,7 +162,6 @@ export const QuestionFormEdit = ({ closeModal, type, problem }) => {
               value={solved}
               onChange={handleSolved}
             />
-            {/* <CustomInput label={'Solved'} handleEntry={handleSolved} /> */}
             <div>
               <div className="flex items-center justify-end py-4 border-t border-solid border-slate-200 rounded-b">
                 <button

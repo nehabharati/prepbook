@@ -38,7 +38,7 @@ export const Output = ({ outputDetails }) => {
   return (
     <>
       <div
-        className={`${styles.output} w-full my-4 md:my-0 h-56 bg-gray-900 text-white font-normal text-sm overflow-y-auto`}
+        className={`${styles.output} w-full my-4 md:mx-2 md:my-0 h-56 bg-gray-900 text-white font-normal text-sm overflow-y-auto`}
       >
         {outputDetails ? <>{getOutput()}</> : null}
       </div>

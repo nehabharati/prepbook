@@ -3,22 +3,11 @@ import { CodeEditorWindow, Dropdown, Output, Back } from '../../elements';
 import { Header } from '../Header';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
-// import { classnames } from '../utils/general';
 import classNames from 'classnames';
 import { languageOptions } from '../../constants/languageOptions';
 import { customStyles } from '../../constants/customStyles';
-
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import monacoThemes from 'monaco-themes/themes/themelist';
-
 import { defineTheme } from '../../lib/defineTheme';
-// import useKeyPress from '../hooks/useKeyPress';
-// import Footer from './Footer';
-// import CustomInput from './CustomInput';
-// import OutputDetails from './OutputDetails';
-
 const javascriptDefault = `// some comment`;
 
 export const Playground = ({ codeText }) => {
@@ -30,8 +19,6 @@ export const Playground = ({ codeText }) => {
   const [language, setLanguage] = useState(languageOptions[0]);
   const router = useRouter();
   const { code } = router.query;
-  //   const enterPress = useKeyPress('Enter');
-  //   const ctrlPress = useKeyPress('Control');
 
   useEffect(() => {
     setCodeValue(codeText);
@@ -41,18 +28,9 @@ export const Playground = ({ codeText }) => {
     setLanguage(sl);
   };
 
-  //   useEffect(() => {
-  //     if (enterPress && ctrlPress) {
-  //       console.log('enterPress', enterPress);
-  //       console.log('ctrlPress', ctrlPress);
-  //       handleSubmit();
-  //     }
-  //   }, [ctrlPress, enterPress]);
   const onChange = (action, data) => {
-    console.log(action);
     switch (action) {
       case 'code': {
-        console.log(data);
         setCodeValue(data);
         break;
       }
@@ -62,14 +40,11 @@ export const Playground = ({ codeText }) => {
     }
   };
 
-  console.log(code?.split('-').join(' '), codeValue);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
     const formData = {
       language_id: language.id,
-      // encode source code in base64
       source_code: btoa(codeValue),
       stdin: btoa(customInput),
     };
@@ -173,108 +148,67 @@ export const Playground = ({ codeText }) => {
     );
   }, []);
 
-  //   const showSuccessToast = (msg) => {
-  //     toast.success(msg || `Compiled Successfully!`, {
-  //       position: 'top-right',
-  //       autoClose: 1000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //   };
-  //   const showErrorToast = (msg) => {
-  //     toast.error(msg || `Something went wrong! Please try again.`, {
-  //       position: 'top-right',
-  //       autoClose: 1000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //   };
-  console.log(code);
   return (
     <>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      /> */}
       <Header />
       <Back />
-
-      <div>
-        <div className="flex flex-col w-full px-4">
-          <h1 className="my-4 capitalize">{code?.split('-').join(' ')}</h1>
-          <div className="flex md:flex-row flex-col">
-            <div className="bg-black w-full md:mx-4 rounded-t-lg">
-              <div className="flex flex-col md:flex-row w-full">
-                <div className="px-4 py-2">
-                  <Dropdown
-                    onChange={onSelectChange}
-                    placeholder="Language"
-                    options={languageOptions}
-                    defaultValue={languageOptions[0]}
-                    styles={customStyles}
-                  />
-                </div>
-                <div className="px-4 py-2">
-                  <Dropdown
-                    onChange={handleThemeChange}
-                    defaultValue={theme}
-                    styles={customStyles}
-                    placeholder="Theme"
-                    options={Object.entries(monacoThemes).map(
-                      ([themeId, themeName]) => ({
-                        label: themeName,
-                        value: themeId,
-                        key: themeId,
-                      })
-                    )}
-                  />
-                </div>
+      <div className="flex flex-col w-full px-6">
+        <h1 className="mb-4 capitalize">{code?.split('-').join(' ')}</h1>
+        <div className="flex md:flex-row flex-col">
+          <div className="bg-black w-full rounded-t-lg">
+            <div className="flex flex-col md:flex-row w-full">
+              <div className="px-4 py-2">
+                <Dropdown
+                  onChange={onSelectChange}
+                  placeholder="Language"
+                  options={languageOptions}
+                  defaultValue={languageOptions[0]}
+                  styles={customStyles}
+                />
               </div>
-              <div className="w-full h-full justify-start items-end">
-                <CodeEditorWindow
-                  code={code}
-                  onChange={onChange}
-                  language={language?.value}
-                  theme={theme.value}
+              <div className="px-4 py-2">
+                <Dropdown
+                  onChange={handleThemeChange}
+                  defaultValue={theme}
+                  styles={customStyles}
+                  placeholder="Theme"
+                  options={Object.entries(monacoThemes).map(
+                    ([themeId, themeName]) => ({
+                      label: themeName,
+                      value: themeId,
+                      key: themeId,
+                    })
+                  )}
                 />
               </div>
             </div>
-            <div className="right-container flex flex-shrink-0 w-full md:w-[30%] flex-col">
-              <Output outputDetails={outputDetails} />
-              <div className="flex flex-col items-end">
-                {/* <Input customInput={customInput} setCustomInput={setCustomInput} /> */}
-                <button
-                  type="submit"
-                  onClick={handleSubmit}
-                  disabled={!code}
-                  className={classNames(
-                    'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
-                    !code ? 'opacity-50' : ''
-                  )}
-                >
-                  {processing ? 'Processing...' : 'Compile and Execute'}
-                </button>
-              </div>
-              {/* {outputDetails && <OutputDetails outputDetails={outputDetails} />} */}
+            <div className="w-full h-full justify-start items-end">
+              <CodeEditorWindow
+                code={code}
+                onChange={onChange}
+                language={language?.value}
+                theme={theme.value}
+              />
+            </div>
+          </div>
+          <div className="right-container flex flex-shrink-0 w-full md:w-[30%] flex-col">
+            <Output outputDetails={outputDetails} />
+            <div className="flex flex-col items-end">
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                disabled={!code}
+                className={classNames(
+                  'mt-4 bg-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 text-white flex-shrink-0',
+                  !code ? 'opacity-50' : ''
+                )}
+              >
+                {processing ? 'Processing...' : 'Compile and Execute'}
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      {/* <Footer /> */}
     </>
   );
 };
